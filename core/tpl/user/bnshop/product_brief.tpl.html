@@ -1,0 +1,95 @@
+{* шаблон короткого описния товара *}
+
+{if $product_info ne NULL}
+{* определяем пмеременные  ссылка на полное описание и формат названия товара с редактированием или без*}
+
+{*ссылка на полное описание товара*}
+{if $smarty.const.CONF_MOD_REWRITE eq 1}
+	{assign var="tlink" value="<a href='product_`$product_info.productID`.html'>`$product_info.name`</a>"}
+{else}
+	{assign var="tlink" value="<a href='index.php?productID=`$product_info.productID`'>`$product_info.name`</a>"}
+{/if}
+
+{*Ссылка на редактирование*}
+{assign var="preheader" value="<a href='`$smarty.const.ADMIN_FILE`?productID=`$product_info.productID`&amp;eaction=prod' title='`$smarty.const.STRING_EDITPR`' style='float: right;'>+</a>"}
+
+
+{*выводим заголовоk для товара в зависимости от прав пользователя*}
+{if $isadmin eq "yes"}
+	{assign var="postheader" value=`$preheader``$tlink`}
+{else}
+	{assign var="postheader" value=$tlink}{/if}
+
+<!--good-->
+<!--Превью товара-->
+{*preview*}
+<div id="preview_pic">
+{if $smarty.const.CONF_DISPLAY_FOTO eq 1}    
+	
+	{if $product_info.picture}{*если есть фото показываем его*}          
+		<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$product_info.productID}.html{else}index.php?productID={$product_info.productID}{/if}">
+			<img src="data/small/{$product_info.picture}" alt="{$product_info.name}"  height="227px">
+		</a>
+	{else}{*если нет фото показываем заглушку*}          		
+		<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$product_info.productID}.html{else}index.php?productID={$product_info.productID}{/if}" >
+			<img src="data/empty.gif" alt="no photo" height="227px">
+		</a>
+	{/if}
+{/if}
+<div>
+<!--#Превью товара-->
+
+<!--stars-->
+<div id="stars">
+<center>
+{include file="show_stars.tpl.html" header=$postheader}
+</center>
+</div>
+<!--stars-->
+
+
+<div id="good_descr">
+{*$product_info.name*}
+<div id="good_title"><span class="good_title">{$postheader}</span></div>
+
+<!--#good_characters-->
+<table id="good_characters" cellspacing="0" cellpadding="0" border="0" width=100%>
+{*артикул*}
+{if $smarty.const.CONF_DISPLAY_PRCODE eq 1}
+	{if $product_info.product_code}
+		<tr align="center">
+			<td width=50%><span class="character">{$smarty.const.STRING_PRODUCT_CODE}</span></td>
+			<td><span class="character_id">{$product_info.product_code}</span></td>
+		</tr>
+		{assign var="otstup" value=1}
+        {/if}
+{/if}{*#артикул*}
+
+{*наличие на складе*}
+{assign var="otstup" value=0}
+	<tr>
+{if $smarty.const.CONF_CHECKSTOCK == '1'}
+			<span class="character">{$smarty.const.IN_STOCK}</span>: 
+		{if $product_info.in_stock > 0}
+			<span class="avaliable">{$smarty.const.ANSWER_YES}</span>
+		{else}
+			{if $product_info.in_stock < 0}
+			<span class="avaliable">Ожидается</span>
+			{else}
+			<span class="unavaliable">{$smarty.const.ANSWER_NO}</span>
+			{/if}
+		{/if}
+		{assign var="otstup" value=1}{/if}
+			
+	</tr>
+{*#наличие на складе*}
+</table><!--#good_characters-->
+
+{*цена товара*}
+<div id="good_price"><span class="price">
+{if $currencies_count ne 0}{if $product_info.Price <= 0}{$smarty.const.STRING_NOPRODUCT_IN}{else}{$product_info.PriceWithUnit}{/if}{/if}
+</span></div>
+
+
+</div><!--#good-->
+{/if}

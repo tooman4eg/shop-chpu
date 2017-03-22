@@ -1,0 +1,32 @@
+  #axcrt {
+      top: expression(document.documentElement.scrollTop + Math.ceil((document.documentElement.clientHeight-100)/2)+ "px") !important;
+      left: expression(Math.ceil((document.documentElement.clientWidth-300)/2)+ "px") !important;
+    }
+	
+body {behavior:url("data/admin/csshover.htc");}
+
+.semafor{background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='data/{/literal}{$smarty.const.TPL}{literal}/best.png', sizingMethod='image');}
+	
+img {
+	border:0;
+	}
+	
+	p {
+	font:arial;
+	}
+	
+#search_form {
+	padding: 1px 15px 5px 25px;
+	}
+
+	#stars {
+min-height:20px;
+border:1px;
+}	
+#good_title {
+height:51px;
+}
+	
+	#subcategories li {
+	padding-left:0px;
+	}

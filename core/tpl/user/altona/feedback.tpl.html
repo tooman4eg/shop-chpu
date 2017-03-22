@@ -1,0 +1,111 @@
+{* шаблон формы обратной связи *}
+
+{if $sent eq NULL}
+<table cellspacing="5" cellpadding="0" width="100%">
+  <tr>
+   <td style="vertical-align:top" width="50%"><div style="text-align:center; font-size:20px; color:#000; padding-top:10px; padding-bottom:10px;"><strong>Наши контакты</strong></div>
+  <table cellpadding="10" cellspacing="0" width="350px">
+      <tr>
+       <td valign="top" style="font-size:16px; color:#008000"><div style="float:right; padding-right:70px;"><img src="data/{$smarty.const.TPL}/kontact.png" alt=""></div><strong>Моб. (123) 547-56-85<p>Тел. (123) 547-56-85</p><p>Fax. (123) 547-56-85</p></strong>
+       </td>
+      </tr>
+      <tr>
+       <td style="font-size:14px;"><strong>Город: Адресс ул. дом 2 (станция метро)<p>Магазин Webmaster (2-этаж)</p><p style="color:#000">Рабочее время:</p><p>I-V <span style="color:#C00">10.00-18.00</span></p><p>VI &nbsp;<span style="color:#C00">9.00-15.00</span></p><p>VII <span style="color:#C00">неработаем</span></p><p>Работаем повсеместно.</p></strong>
+       </td>
+      </tr>
+     </table> 
+   </td>
+    <td style="vertical-align:top" align="left">
+    <div style="text-align:center; font-size:20px; color:#000; padding-top:10px; padding-bottom:10px;"><strong>Задать вопрос
+</strong></div>
+	{if $error ne NULL}<div style="padding-bottom:20px;" class="error" align="center">{if $error eq 2}{$smarty.const.ERR_WRONG_CCODE}{elseif $error eq 3}{$smarty.const.ERR_WRONG_POST}{else}{$smarty.const.FEEDBACK_ERROR_FILL_IN_FORM}{/if}</div>{/if}
+      <form name="formfeedback" id="formfeedback" method="post" action="index.php">
+        <table cellspacing="0" cellpadding="0">
+          <tr>
+            <td style="font-size:14px; color:#000;" align="left"><strong>{$smarty.const.FEEDBACK_CUSTOMER_NAME}</strong><input type="hidden" name="send" value="yes"><input type="hidden" name="feedback" value="yes"></td>
+          </tr>
+          <tr>
+            <td style="height: 2px;"></td>
+          </tr>
+          <tr>
+            <td align="left" style="padding-bottom:10px;"><input name="customer_name" type="text" maxlength="80" style="width:250px; height:20px; border:solid 1px #000; font-size:14px;" value="{$customer_name}"></td>
+          </tr>
+          <tr>
+            <td style="height: 6px;"></td>
+          </tr>
+          <tr>
+            <td style="font-size:14px; color:#000;" align="left"><strong>{$smarty.const.CUSTOMER_EMAIL}</strong></td>
+          </tr>
+          <tr>
+            <td style="height: 2px;"></td>
+          </tr>
+          <tr>
+            <td align="left" style="padding-bottom:10px;"><input name="customer_email" type="text" maxlength="80" style="width:250px; height:20px; border:solid 1px #000; font-size:14px;" value="{$customer_email}"></td>
+          </tr>
+          <tr>
+            <td style="height: 6px;"></td>
+          </tr>
+          <tr>
+            <td style="font-size:14px; color:#000;" align="left"><strong>{$smarty.const.FEEDBACK_CUSTOMER_MESSAGE_SUBJ}</strong></td>
+          </tr>
+          <tr>
+            <td style="height: 2px;"></td>
+          </tr>
+          <tr>
+            <td align="left" style="padding-bottom:10px;"><input name="message_subject" type="text" style="width:370px; height:20px; border:solid 1px #000; font-size:14px;" maxlength="200" value="{$message_subject}"></td>
+          </tr>
+          <tr>
+            <td style="height: 6px;"></td>
+          </tr>
+          <tr>
+            <td style="font-size:14px; color:#000;" align="left"><strong>{$smarty.const.FEEDBACK_CUSTOMER_MESSAGE_TEXT}</strong></td>
+          </tr>
+          <tr>
+            <td style="height: 2px;"></td>
+          </tr>
+          <tr>
+            <td align="left" style="padding-bottom:10px;"><textarea name="message_text" style="width:370px; height:120px; border:solid 1px #000; font-size:14px;">{$message_text}</textarea></td>
+          </tr>
+          {if $smarty.const.CONF_ENABLE_CONFIRMATION_CODE eq 1}
+          <tr>
+            <td style="height: 6px;"></td>
+          </tr>
+          <tr>
+            <td align="left"><img src="index.php?do=captcha&amp;{php}echo session_name();{/php}={php}echo session_id();{/php}" alt="code"></td>
+          </tr>
+          <tr>
+            <td style="height: 2px;"></td>
+          </tr>
+          <tr>
+            <td align="left"><input name="fConfirmationCode" value="{$smarty.const.STR_ENTER_CCODE}" type="text" style="width: 220px; color: #aaaaaa;" onfocus="if(this.value=='{$smarty.const.STR_ENTER_CCODE}')
+                        {literal}
+                        {this.style.color='#000000';this.value='';}
+                        {/literal}" onblur="if(this.value=='')
+                        {literal}{{/literal}this.style.color='#aaaaaa';this.value='{$smarty.const.STR_ENTER_CCODE}'{literal}}{/literal}"></td>
+          </tr>
+          {/if}
+        </table>
+      </form>
+      
+      <table cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td style="padding-top:10px; padding-bottom:15px;"><a style="font-size:14px;color:#C00;" href="#" onclick="document.getElementById('formfeedback').submit(); return false"><strong>{$smarty.const.OK_BUTTON3}</strong></a>&nbsp;<span style="font-size:14px; color:#000;">|</span>&nbsp;<a style="font-size:14px;color:#008000;" href="#" onclick="document.getElementById('formfeedback').reset(); return false"><strong>{$smarty.const.RESET_BUTTON}</strong></a></td>
+  </tr>
+</table>
+{else}
+<table cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td class="oki pad" style="font-size:18px;" align="center"><strong>{$smarty.const.FEEDBACK_SENT_SUCCESSFULLY}</strong></td>
+  </tr>
+</table>
+
+{/if}
+      
+     </td>
+  </tr>
+</table>
+
+<div class="fil4"></div>
+<div align="center"><img src="data/{$smarty.const.TPL}/my_shop.jpg" alt=""></div>
+
+

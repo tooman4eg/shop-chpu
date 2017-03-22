@@ -1,0 +1,164 @@
+{* подключение файла заголовков *}
+{include file="head.tpl.html"}
+
+<body>
+
+<!--LiveInternet counter-->{literal}<script type="text/javascript"><!--
+new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+
+";"+Math.random();//--></script><!--/LiveInternet-->
+{/literal}
+
+<!-- Yandex.Metrika counter -->{literal}
+<script type="text/javascript">
+var yaParams = {/*Здесь параметры визита*/};
+</script>
+
+<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript"></script>
+<script type="text/javascript">
+try { var yaCounter796265 = new Ya.Metrika({id:796265,
+          webvisor:true,
+          clickmap:true,
+          trackLinks:true,
+          accurateTrackBounce:true,
+          trackHash:true,params:window.yaParams||{ }});
+} catch(e) { }
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/796265" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+	{/literal}
+{if $smarty.const.CONF_SHOP_BILD eq 1 and $isadmin ne "yes"}
+{* сообщение о профилактике *}
+<!--profilactika-->
+	<div id="profilactika">
+		<img src="/data/{$smarty.const.TPL}/bild.gif" alt="">
+		<br><br>
+		{$smarty.const.STRING_BILD}<br>
+		{$smarty.const.STRING_BILD_DES}
+	</div>
+<!--#profilactika-->
+
+{else}
+{include file="debug.tpl.html"}
+
+{* меню *}
+<!-- Тоp_menu-->
+		<div class="top_menu">
+		<center>
+			<a href="{$smarty.const.CONF_FULL_SHOP_URL}">Наш магазин</a>
+			<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}news.html{else}index.php?news=yes{/if}">Новости</a>    		
+    		<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}page_2.html{else}index.php?show_aux_page=1{/if}">Оплата и доставка</a>
+    		<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}page_3.html{else}index.php?show_aux_page=1{/if}">Как заказать</a>			
+			<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}feedback.html{else}index.php?feedback=yes{/if}">Контакты</a>    			
+		</center>
+		</div>
+		<!-- #Тоp_menu-->
+	<div class="main">
+		
+			
+		<div id="header">
+			<table cellspacing="0" cellpadding="0" border="0" width="100%">
+			<tr valign="top" ><td width="235">			
+				<div id="logoblock">
+					<span class="tel">8 (495) 660-04-99 </span><br>
+					<span class="top_mail"><a>info@bnshop.ru</a></span><br>
+					<div id="logotype"><a href="http://bnshop.ru/"><img src="/data/{$smarty.const.TPL}/image/logo.png" border=0></a>
+					Для Вас, с 2008 года!
+					</div>
+				</div>
+			</td><td>
+				<div id="shapka">
+					<img src="/data/{$smarty.const.TPL}/image/shapka.gif">
+				</div>
+			</td><td>
+			<!--searchform-->
+			<div id="search_form">	
+				{include file="searchform.tpl.html" }	
+			</div>			
+			<!--#searchform-->
+			<div id="cart_header">
+				{include file="cart_info.tpl.html" }				
+			</div>
+			</td></tr>
+			</table>
+		</div>
+		
+		<!--фиксиарованное меню каталогов-->			
+		<div class="fixed_menu">
+		<center>
+   			<a href="category_20.html">Новинки</a>
+                        <a href="category_24.html">Дед Мороз и Снегурочка</a>
+			<a href="category_54.html">Костюмы на Хэллоуин</a>
+			<a href="category_3.html">Клубные платья</a>		
+			<a href="category_7.html">Аксессуары</a>			
+                        <a href="category_63.html">Декорации</a>
+                        				
+		</center>
+		</div>
+		
+		<!--#фиксиарованное меню каталогов-->			
+		<!--content-->
+		<table id="content" cellpadding="0" width="100%">
+			<tr valign="top">
+				<td width="270">
+			<!--левая колонка-->			
+			<div id="left">		
+				{* блоки левой колонки *}	         					
+								
+				  {if $countlb > 0}
+          				{include file="blocks.tpl.html" binfo=$left_blocks}
+			          {/if}
+
+			</div>	<!--#левая колонка-->			
+			</td><td>
+			<!--Центральня колонка-->
+			<div id="center">
+				
+
+		{* верхние блоки *}
+          
+		  {include file="blocks.tpl.html" binfo=$top_blocks bclass="hdbtop" balign="left"}
+		  
+		  {* вывод основного контента*}
+          
+		  {include file="$main_content_template"}
+		  
+		  {* нижние блоки *}
+          
+		  {include file="blocks.tpl.html" binfo=$bottom_blocks bclass="hdbtop" balign="left"}
+
+			</div>
+			<!--#центральная колонка-->
+			</td><td>
+			<!--правая колонка-->			
+			<div id="right">
+			</div>
+			<!--#правая колонка-->			
+			</td>
+			</tr>
+		</table>
+		<!--#content-->			
+	</div>
+	
+		<!--footer-->
+		<div id="footer">
+			<div id="copyrights">
+				© 2008-2016 BNShop.ru<br>
+				Интернет-магазин игровых и карнавальных костюмов. 
+			</div>			
+			<div id="contacts">
+			<span class="phone">8-495-6600499 г. Москва</span><br>
+			<a class="mail" href="mailto:info@bnshop.ru">info@bnshop.ru</a>
+			</div>		
+		</div>
+		<!--#footer end-->
+	
+{* прорисовка скрытого ajax бокса *}
+<script type="text/javascript">printcart();</script>
+
+{/if} {* # вывод контента*}
+</body> 
+</html>

@@ -1,0 +1,65 @@
+/* ------------------------------- 1.Ссылки --------------------------------*
+a.back{
+	color:#fff;
+	text-decoration:none;
+}
+a:hover { color:#505AE0; text-decoration:none; }
+/* ------------------------------- 2.Структура контейнера --------------------------------*/
+
+
+h1 { font-size:36px;
+	color:#42437A;
+	font-family:"Georgia", "Times New Roman", "Times", serif;
+	text-shadow: 0px 2px 6px #2a2a2a;
+	}
+/*h2 { font-size:18px;
+	padding:0px 0px 40px 0px;
+	color:#aaa;
+	text-shadow: 0px 1px 2px #2a2a2a;
+	}
+/* Основа ротатора изображений */
+#banner { padding:0 0 30px 0; margin:0; height:260px; text-align:center;}
+
+/*============================*/
+/*=== Пользовательские стили Слайдера ===*/
+/*============================*/
+#slider-wrapper { background:none; width:650px; padding:0; margin:auto; }
+
+#slider { position:relative; width:650px; height:250px;	background:url(../images/loading.png) no-repeat 50% 50%; }
+#slider img { position:absolute; top:0px; left:0px;	display:none; }
+#slider a {	border:0; display:block; }
+
+.nivo-controlNav { margin:auto;	padding:0; position:absolute; bottom:-19px;	left:340px;	text-align:center; margin:auto; }
+.nivo-controlNav a { display:block;	width:15px;	height:15px;
+	background:url(../images/bullets.png) no-repeat;	text-indent:-9999px;
+	border:0; margin-right:3px;	float:left;	position:relative; z-index:30; cursor:pointer; }
+.nivo-controlNav a.active {	font-weight:bold; background-position:0 -22px; }
+
+.nivo-directionNav a { display:block; width:56px; height:50px;
+	background:url(../images/arrows.png) no-repeat;
+	text-indent:-9999px; border:0; position:absolute; top:45%;
+	z-index:30;	cursor:pointer; }
+a.nivo-nextNav { background-position:-56px 0; top:101px; right:0px; }
+
+a.nivo-nextNav:hover { background-position:-56px -50px; }
+a.nivo-prevNav { top:101px; left:0px; }
+a.nivo-prevNav:hover { background-position:0 -50px; }
+
+/* Nivo Slider стили */
+.nivoSlider { position:relative; }
+.nivoSlider img { position:absolute; top:0px; left:0px; }
+/* Если изображение обвернуто в ссылку */
+.nivoSlider a.nivo-imageLink { position:absolute;
+	top:0px; left:0px; width:100%; height:100%;
+	border:0; padding:0; margin:0; z-index:20; display:none; }
+/* The slices in the Slider */
+.nivo-slice { display:block; position:absolute;	z-index:10;	height:100%; }
+/* Стили заголовка */
+.nivo-caption {	position:absolute; left:0px; bottom:0px; font:13px calibri;
+	padding:0; margin:0; color:#CCC; background:#000; opacity:0.7; width:100%; z-index:29; }
+
+.nivo-caption p { margin:0; padding:5px 15px;color:#fff}
+.nivo-caption a { color:#efe9d1; text-decoration:underline;	display:inline !important; }
+.nivo-html-caption { display:none; }
+ 
+.articles {   padding: 0px 10px 0px 33px;}

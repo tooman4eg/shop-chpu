@@ -1,0 +1,46 @@
+{php}
+function BestViewCenterRecursiveCat($catID,$arrayID=array()) {
+    $data = db_query("SELECT categoryID FROM ".CATEGORIES_TABLE." WHERE parent=".$catID);
+    while ($row = db_fetch_assoc($data)) $arrayID = BestViewCenterRecursiveCat($row['categoryID'],$arrayID);
+    $arrayID[]=$catID;
+    return $arrayID; }
+$categoryID = $this->get_template_vars('categoryID');
+$addon = isset($categoryID)?"AND p.categoryID IN (".implode(",",BestViewCenterRecursiveCat($categoryID)).")":"";
+$data = db_query("
+SELECT p.name, p.productID, p.Price, p.in_stock, p.viewed_times, p.brief_description, pp.filename AS picture
+FROM ".PRODUCTS_TABLE." AS p
+LEFT JOIN ".PRODUCT_PICTURES." AS pp ON p.default_picture=pp.photoID
+WHERE p.enabled=1 AND p.categoryID>1 $addon
+ORDER BY p.viewed_times DESC
+LIMIT 4");
+while ($row = db_fetch_assoc($data)) {
+    $row["PriceWithUnit"] = show_price($row["Price"]);
+    $r[] = $row;}
+$this->assign("best_view_to_show", $r);
+{/php}
+<table cellspacing="0" cellpadding="0" width="100%">
+  {section name=u loop=$best_view_to_show}
+  {if $smarty.section.u.index is div by $smarty.const.CONF_COLUMNS_PER_PAGE}<tr>{assign var="helpcounter" value=0}{/if}
+  {assign var="helpcounter" value=$helpcounter+1}
+  <td width="{math equation="100 / x" x=4 format="%d"}%" align="left" valign="top" style="padding: 8px;
+border: 1px solid #000; -webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px; background: #fff;">
+  {include file="product_brief2.tpl.html" product_info=$best_view_to_show[u]}
+  </td>
+    {if ($smarty.section.u.index+1) is div by $smarty.const.CONF_COLUMNS_PER_PAGE || $smarty.section.u.last}
+    </tr>
+    <tr>
+    {section name=e loop=$smarty.const.CONF_COLUMNS_PER_PAGE max=$helpcounter}
+    {assign var="idnrecat" value=$smarty.section.u.index-$helpcounter+$smarty.section.e.index+1}
+    <td align="left">
+  
+    </td>
+    {if $smarty.section.e.index+1 ne $smarty.const.CONF_COLUMNS_PER_PAGE}<td><img src="data/{$smarty.const.TPL}/pixel.gif" class="delim" alt=""></td>{/if}
+    {/section}
+    </tr>
+    {else}
+    <td class="delim"><img src="data/{$smarty.const.TPL}/pixel.gif" class="delim" alt=""></td>
+    {/if}
+  {sectionelse}
+    <div align="center">В этой категории нет ни одного товара</div>
+  {/section}
+</table>

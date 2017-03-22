@@ -1,0 +1,12 @@
+{* форма поиска товаров *}
+<center>
+      <form action="index.php" method="get" name="formpoisk" id="formpoisk">			
+	{section name=sert loop=$searchstrings}
+		<input type="hidden" name='search_string_{$smarty.section.sert.index}' value='{$searchstrings[sert]}'>
+	{/section}
+
+	<input type="text" value="{$searchstring}" name="searchstring" class="search_input"><br>
+	<label class="search_label">{$smarty.const.STRING_SEARCH}</label>
+
+	</form>
+</center>

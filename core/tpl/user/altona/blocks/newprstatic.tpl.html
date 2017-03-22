@@ -1,0 +1,120 @@
+{* шаблон статического блока новых товаров *}
+
+<h2><span style="color:#0B57C5;">Новинки дня</span></h2>
+{if $new_products}
+<table cellspacing="0" cellpadding="0" width="100%" >
+  {section name=u loop=$new_products}
+
+
+  {if $smarty.section.u.index is div by $smarty.const.CONF_COLUMNS_PER_PAGE}<tr>{assign var="helpcounter" value=0}{/if}
+  {assign var="helpcounter" value=$helpcounter+1}
+    <td width="{math equation="100 / x" x=$smarty.const.CONF_COLUMNS_PER_PAGE format="%d"}%" align="left" valign="top">  
+	
+{*ссылка на полное описание товара*}
+{if $smarty.const.CONF_MOD_REWRITE eq 1}
+	{assign var="tlink" value="<a href='product_`$new_products[u].productID`.html'>`$new_products[u].name`</a>"}
+{else}
+	{assign var="tlink" value="<a href='index.php?productID=`$new_products[u].productID`'>`$new_products[u].name`</a>"}
+{/if}
+
+{*Название товара*}
+{assign var="preheader" value="<a href='`$smarty.const.ADMIN_FILE`?productID=`$new_products[u].productID`&amp;eaction=prod' title='`$smarty.const.STRING_EDITPR`' style='float: right;'>+</a>"}
+
+
+{*выводим заголовоk для товара в зависимости от прав пользователя*}
+{if $isadmin eq "yes"}
+	{assign var="postheader" value=`$preheader``$tlink`}
+{else}
+	{assign var="postheader" value=$tlink}{/if}
+
+<!--good-->
+<!--Превью товара-->
+{*preview*}
+<div id="preview_pic">
+{if $smarty.const.CONF_DISPLAY_FOTO eq 1}    
+	
+	<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$new_products[u].productID}.html{else}index.php?productID={$new_products[u].productID}{/if}"><img src="data/{$new_products[u].filename}" alt="{$new_products[u].name}"></a>
+{/if}
+
+
+<div>
+<!--#Превью товара-->
+
+<!--stars-->
+<div id="stars">
+<center>
+{include file="show_stars.tpl.html" header=$postheader}
+</center>
+</div>
+<!--stars-->
+
+
+<div id="good_descr">
+{*$new_products[u].name*}
+<div id="good_title"><span class="good_title">{$postheader}</span></div>
+
+<!--#good_characters-->
+<table id="good_characters" cellspacing="0" cellpadding="0" border="0" width=100%>
+{*артикул*}
+{if $smarty.const.CONF_DISPLAY_PRCODE eq 1}
+	{if $new_products[u].product_code}
+		<tr align="left">
+			<td width=50%><span class="character">{$smarty.const.STRING_PRODUCT_CODE}</span></td>
+			<td><span class="character_id">{$new_products[u].product_code}</span></td>
+		</tr>
+		{assign var="otstup" value=1}
+        {/if}
+{/if}{*#артикул*}
+
+{*наличие на складе*}
+{assign var="otstup" value=0}
+	<tr>
+		{if $smarty.const.CONF_CHECKSTOCK == '1'}
+			<td><span class="character">{$smarty.const.IN_STOCK}</span></td> 
+		{if $new_products[u].in_stock > 0}
+			<td><span class="avaliable">{$smarty.const.ANSWER_YES}</span></td>
+		{else}
+			<td><span class="unavaliable">{$smarty.const.ANSWER_NO}</span></td>
+		{/if}
+		{assign var="otstup" value=1}{/if}
+			
+	</tr>
+{*#наличие на складе*}
+</table><!--#good_characters-->
+
+{*цена товара*}
+<div id="good_price"><span class="price">
+{if $new_products[u].cena <= 0}{$smarty.const.STRING_NOPRODUCT_IN}{else}{$new_products[u].Price}{/if}
+</span></div>
+
+</div><!--#good-->
+
+	
+	
+	
+	
+	
+	
+	
+	
+</td>
+    {if ($smarty.section.u.index+1) is div by $smarty.const.CONF_COLUMNS_PER_PAGE || $products_to_show_counter eq $smarty.section.u.index+1}
+	</tr>
+    <tr>
+	{section name=e loop=$smarty.const.CONF_COLUMNS_PER_PAGE max=$helpcounter}
+    {assign var="idnrecat" value=$smarty.section.u.index-$helpcounter+$smarty.section.e.index+1}
+    <td align="left"></td>
+    {if $smarty.section.e.index+1 ne $smarty.const.CONF_COLUMNS_PER_PAGE}<td>
+	</td>{/if}
+    {/section}
+    </tr>
+  {else}<td class="delim"></td>{/if}
+  {/section}
+</table>
+{else}
+<div align="center">{$smarty.const.STRING_EMPTY_CATEGORY}</div>
+{/if}
+
+
+
+

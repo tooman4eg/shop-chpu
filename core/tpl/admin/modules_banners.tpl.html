@@ -1,0 +1,231 @@
+{php}
+$root_dir = $_SERVER['DOCUMENT_ROOT'].'/';
+if (empty($_GET['act'])) {
+{/php}<script type="text/javascript" src="/data/highslide/highslide/highslide-full.js"></script>
+<link rel="stylesheet" type="text/css" href="/data/highslide/highslide/highslide.css" />
+{literal}
+<script type="text/javascript">
+	hs.graphicsDir = '/data/highslide/highslide/graphics/';
+	hs.transitions = ['expand', 'crossfade'];
+	hs.outlineType = 'rounded-white';
+	hs.fadeInOut = true;
+	hs.dimmingOpacity = 0.75;
+
+	// define the restraining box
+	hs.useBox = true;
+	hs.width = 300;
+	hs.height = 300;
+
+</script>
+{/literal}
+{php}
+echo '<h3>Банеры </h3><table class="adn">';
+echo '<tr class="lineb"><td>ID</td><td>Активность</td><td>Название</td><td>Фото</td><td align="right">Действие</td></tr>';
+$select = mysql_query("SELECT * FROM ".BANNERS_TABLE." ORDER BY id");
+if (!$select) {
+	$m1 = "
+		CREATE TABLE `".BANNERS_TABLE."` (
+		`id` int(11) NOT NULL auto_increment,
+		`name` varchar(255) NOT NULL,
+		`text` varchar(255) NOT NULL,
+		`url` varchar(255) NOT NULL,
+		`img` varchar(255) NOT NULL,
+		`active` tinyint(1) NOT NULL,
+		UNIQUE KEY `id` (`id`)
+		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=1;
+		";		
+		
+		if (mysql_query($m1)){
+			echo "Создание таблицы <i>".BANNERS_TABLE."</i> завершено<br>Обновите страницу"; $m1 = 'yes';}
+		else{
+			echo "Таблицу <i>".BANNERS_TABLE."</i> создать не удалось<br>Установите таблицу вручную, как это описано в файле readme.txt "; $m1 = 'no';
+			}
+		
+	}
+else {
+while ($row = mysql_fetch_array($select)) {
+	echo '<tr class="lineybig hover"><td align="left">'.$row['id'].'</td><td align="left">';
+	echo $row['active']==1?  "Да":"Нет";
+	echo'</td><td align="left">'.$row['name'].'</td><td align="left"><a href="/data/banners/'.$row['img'].'" class="highslide" onclick="return hs.expand(this)">'.$row['img'].'</a></td><td align="right"><a href="admin.php?dpt=modules&sub=banners&act=redact&id='.$row['id'].'">Редактировать</a> / <a href="admin.php?dpt=modules&sub=banners&act=del&id='.$row['id'].'">Удалить</a></td></tr>';
+}
+echo "</table>";
+echo '<table width="100%"><tr class="lineb"><td align="right"><a href="admin.php?dpt=modules&sub=banners&act=add">Добавить</a></td></tr></table>';
+
+//Настройки
+echo '<h3>Настройки банера</h3><table class="adn">';
+echo '<tr class="lineb"><td>Название</td><td>параметр</td></tr>';
+$select = mysql_query("SELECT * FROM ".BANNERS_CONFIG_TABLE." ORDER BY id");
+if (!$select) {
+	$m1 = "
+		CREATE TABLE `".BANNERS_CONFIG_TABLE."` (
+		`id` int(11) NOT NULL auto_increment,
+		`param` varchar(255) NOT NULL,
+		`value` varchar(255) NOT NULL,				
+		UNIQUE KEY `id` (`id`)
+		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=1;
+		";
+		if (mysql_query($m1)){
+			echo "Создание таблицы <i>".BANNERS_CONFIG_TABLE."</i> завершено<br>Обновите страницу"; $m1 = 'yes';}
+		else{
+			echo "Таблицу <i>".BANNERS_CONFIG_TABLE."</i> создать не удалось<br>Установите таблицу вручную, как это описано в файле readme.txt в архиве модуля"; $m1 = 'no';
+			}
+		
+	
+}
+else {
+		echo '<form action="" method="post" enctype="multipart/form-data">';
+		while ($row = mysql_fetch_array($select)) {
+			echo '<tr class="lineybig hover"><td align="rigth">'.$row['param'].'</td>';
+			echo '<td align="left"><input type="text" name="' .$row['value']. '" value="'.$row['value'].'"></td></tr>';
+		}
+		echo "</form>";
+		echo "</table>";
+	}
+}
+}
+elseif ($_GET['act'] == 'add') {
+if($_POST['commited'] == 'yes'){
+	$end = mt_rand(234, 234567);
+	move_uploaded_file($_FILES['img']['tmp_name'], $root_dir."data/banners/".basename($_FILES['img']['name']));
+	$nameF = $root_dir."data/banners/".basename($_FILES['img']['name']);
+	$endname = $root_dir."data/banners/".$end."_".$_FILES['img']['name'];
+	rename($nameF, $endname);
+	
+	$activity = $_POST['active']=="on"? "1":"0";
+	
+	mysql_query("INSERT INTO ".BANNERS_TABLE." (`id`, `name`, `text`, `url`, `img`, `active`) VALUES
+	('', '".$_POST['name']."', '".$_POST['text']."', '".$_POST['url']."', '".$end."_".$_FILES['img']['name']."', '".$activity."')");
+	$getid = mysql_query("SELECT MAX(id) as idd FROM ".BANNERS_TABLE."");
+	$ids = mysql_fetch_array($getid);
+	
+	echo "<script>parent.location='admin.php?dpt=modules&sub=banners&act=redact&id=".$ids['idd']."'</script>";
+	
+}
+echo '<table width="100%">';
+echo '<tr class="lineb"><td>Добавление баннера</td></tr>';
+echo '<tr><td><form action="" method="post" enctype="multipart/form-data">';
+	echo '<table>
+		<tr>
+			<td>Название</td>
+			<td><input type="text" name="name"></td>
+		</tr>
+		<tr>
+			<td>Банер включен да/нет</td>
+			<td><input type="checkbox" name="active" ';
+		if  ($row['active']==1)  echo "checked";
+		echo '></td>
+		</tr>
+		<tr>
+			<td>Текст (описание)</td>
+			<td><textarea name="text"></textarea></td>
+		</tr>
+		<tr>
+			<td>URL</td>
+			<td><input type="text" name="url"></td>
+		</tr>
+		<tr>
+			<td>Изображение</td>
+			<td><input type="file" name="img"></td>
+		</tr>
+		<tr><td></td><td><input type="hidden" name="commited" value="yes">
+		<input type="submit" name="Сохранить"></td></tr>
+	</table>';
+echo '</form></td></tr>';
+echo '</table>';
+}
+elseif ($_GET['act'] == 'redact' && !empty($_GET['id'])) {
+{/php}<script type="text/javascript" src="/data/highslide/highslide/highslide-full.js"></script>
+<link rel="stylesheet" type="text/css" href="/data/highslide/highslide/highslide.css" />
+{literal}
+<script type="text/javascript">
+	hs.graphicsDir = '/data/highslide/highslide/graphics/';
+	hs.transitions = ['expand', 'crossfade'];
+	hs.outlineType = 'rounded-white';
+	hs.fadeInOut = true;
+	hs.dimmingOpacity = 0.75;
+
+	// define the restraining box
+	hs.useBox = true;
+	hs.width = 300;
+	hs.height = 300;
+
+</script>
+{/literal}
+{php}
+	$select = mysql_query("SELECT * FROM ".BANNERS_TABLE." WHERE id = '".$_GET['id']."'");
+	if (!mysql_num_rows($select)) {echo 'Позиции с таким ID не существует!';}
+	else {
+		$row = mysql_fetch_array($select);
+		if($_POST['commited'] == 'yes'){
+				
+				$activity = $_POST['active']=="on" ? "1":"0";
+				
+			if (!empty($_FILES['img']['tmp_name'])) {
+				$end = mt_rand(234, 234567);
+				move_uploaded_file($_FILES['img']['tmp_name'], $root_dir."data/banners/".basename($_FILES['img']['name']));
+				$nameF = $root_dir."data/banners/".basename($_FILES['img']['name']);
+				$endname = $root_dir."data/banners/".$end."_".$_FILES['img']['name'];
+				rename($nameF, $endname);
+				unlink("data/banners/".$row['img']."");
+				
+				mysql_query("UPDATE ".BANNERS_TABLE." SET `name` = '".$_POST['name']."', `text` = '".$_POST['text']."', `active` = '".$activity."', `url` = '".$_POST['url']."', `img` = '".$end."_".$_FILES['img']['name']."' WHERE id = '".$_GET['id']."'");
+				echo "<script>parent.location='admin.php?dpt=modules&sub=banners&act=redact&id=".$_GET['id']."'</script>";
+			}
+			else {
+				mysql_query("UPDATE ".BANNERS_TABLE." SET `name` = '".$_POST['name']."', `text` = '".$_POST['text']."', `active` = '".$activity."', `url` = '".$_POST['url']."' WHERE id = '".$_GET['id']."'");
+				echo "<script>parent.location='admin.php?dpt=modules&sub=banners&act=redact&id=".$_GET['id']."'</script>";
+			}
+		}
+		echo '<table width="100%">';
+		echo '<tr class="lineb"><td>Редактирование баннера '.$row['name'].'</td></tr>';
+		echo '<tr><td><form action="" method="post" enctype="multipart/form-data">';
+		
+		
+		echo '<table>
+		<tr>
+			<td>Название</td>
+			<td><input type="text" name="name" value="'.$row['name'].'"></td>
+		</tr>
+		<tr>
+			<td>Показывать банер?</td>
+			<td><input type="checkbox" name="active" ';
+		if  ($row['active']==1)  echo "checked";
+		echo '></td>
+		</tr>
+		<tr>
+			<td>Текст (описание)</td>
+			<td><textarea name="text">'.$row['text'].'</textarea></td>
+		</tr>
+		<tr>
+			<td>URL</td>
+			<td><input type="text" name="url" value="'.$row['url'].'"></td>
+		</tr>
+		<tr>
+			<td>Изображение</td>
+			<td><a href="/data/banners/'.$row['img'].'" class="highslide" onclick="return hs.expand(this)">'.$row['img'].'</a></td>
+		</tr>
+		<tr>
+			<td>Загрузить другое</td>
+			<td><input type="file" name="img"></td>
+		</tr>
+		<tr><td></td><td><input type="hidden" name="commited" value="yes">
+		<input type="submit" name="Сохранить"></td></tr>
+		</table>';
+		echo '</form></td></tr>';
+		echo '</table>';
+	}
+echo '<table width="100%"><tr class="lineb"><td align="left"><a href="admin.php?dpt=modules&sub=banners">Вернуться в раздел</a></td></tr></table>';
+}
+elseif ($_GET['act'] == 'del') {
+	$select = mysql_query("SELECT img FROM ".BANNERS_TABLE." WHERE id = '".$_GET['id']."'");
+	$row = mysql_fetch_array($select);
+	@unlink("data/banners/".$row['img']."");
+	mysql_query("DELETE FROM ".BANNERS_TABLE." WHERE id = '".$_GET['id']."'")
+	or die ("Удаление не удалось. Обратитесь к разработчику.");
+	echo "<script>parent.location='admin.php?dpt=modules&sub=banners'</script>";
+}
+{/php}
+<br>
+<table width="100%"><tr>
+<td class="help"><span class="titlecol2">Помощь по разделу</span><div class="helptext">В этом разделе Вы можете управлять баннерами сайта.<br></div></td>
+</tr></table>

@@ -1,0 +1,55 @@
+{* шаблон блока дерева категорий *}
+
+{if $categories_tree && $categories_tree_count>1}
+<div id="category_tree">
+	
+	{assign var=lvllevel value=1}	 	
+	
+	
+  {section name=h loop=$categories_tree}
+	{if $categories_tree[h].categoryID != 1}{*не показывать главную категорию*}  
+		
+		
+		{if $categories_tree[h].Activation_status !=1} 
+			{if $lvllevele gt $categories_tree[h].level}
+				{assign var=lvllevel value=$categories_tree[h].level}	
+			{/if}	
+			{*
+			<span style="padding-left:{$categories_tree[h].level*15-15}px">  							
+			{$categories_tree[h].name} - {$categories_tree[h].level},  {$lvllevel}</span><br>
+			*}
+		{else}		
+			{if $lvllevel gte  $categories_tree[h].level}
+				
+				{if  $lvllevel eq $categories_tree[h].level or $lvllevel != 1}
+					{assign var=lvllevel value=$categories_tree[h].level+1}	 
+				{else}
+					{assign var=lvllevel value=$categories_tree[h].level}	 
+				{/if}				
+				
+				<span style="padding-left:{$categories_tree[h].level*15-15}px">  			
+					
+								<a href="
+									{if $smarty.const.CONF_MOD_REWRITE eq 1}
+										category_{$categories_tree[h].categoryID}.html
+									{else}index.php?categoryID={$categories_tree[h].categoryID}
+									{/if}" 
+									{if $categoryID == $categories_tree[h].categoryID}class="bf"{/if}>
+									{$categories_tree[h].name}</a>  {*$categories_tree[h].level},  {$lvllevel*}
+						</span><br>
+			{else }		
+			{*
+			<span style="padding-left:{$categories_tree[h].level*15-15}px">  							
+			--{$categories_tree[h].name} - {$categories_tree[h].level},  {$lvllevel}</span><br>
+			*}
+			{/if}	
+			
+		{/if}
+
+	{/if}  
+
+  {/section}
+</div>
+{else}
+<div align="center">{$smarty.const.STRING_NO_CATEGORIES}</div>
+{/if}

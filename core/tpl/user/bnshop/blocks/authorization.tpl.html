@@ -1,0 +1,83 @@
+{* шаблон блока авторизации *}
+{literal}
+<script type="text/javascript">
+function sform(){
+   if (event.keyCode == 13){
+      document.forms["userform"].submit();
+   }
+}
+</script>
+{/literal}
+
+<!--user_short_profile-->
+<div id="user_short_profile">
+
+
+{if $isadmin eq "yes"}
+
+{*авторизированный пользователь*}
+
+	<span class="u_s_name">{$first_name} {$last_name}<span><br>
+	<!--span class="userpic"><img src="data/{$smarty.const.TPL}/image/u_photo.jpg"></span-->
+	<ul>
+		<li><a href="{$smarty.const.ADMIN_FILE}">{$smarty.const.ADMINISTRATE_LINK}</a>
+		<li><a href="index.php?user_details=yes">{$smarty.const.MY_ACCOUNT_LINK}</a>
+		<li><a href="index.php?logout=yes">{$smarty.const.LOGOUT_LINK}</a>
+{elseif $log ne ""}
+		<li><a href="index.php?user_details=yes">{$smarty.const.MY_ACCOUNT_LINK}</a>
+		<li><a href="index.php?logout=yes">{$smarty.const.LOGOUT_LINK}</a>
+
+	</ul>
+
+	<center>
+
+		<span class="u_cart">
+
+{*ссылка оформить заказ*}
+<a {if $smarty.const.CONF_OPEN_SHOPPING_CART_IN_NEW_WINDOW eq 1}
+			         href="#" onclick="open_window('index.php?do=cart',500,300); return false"
+			         {else}
+			         href="{if $smarty.const.CONF_MOD_REWRITE eq 1}cart.html{else}index.php?shopping_cart=yes{/if}" {/if}>{if $smarty.const.CONF_SHOW_ADD2CART == '1'}
+  {if $shopping_cart_value}Ваша корзина:<br>{$shopping_cart_items} {$smarty.const.CART_CONTENT_NOT_EMPTY}<br>
+  <span class="onprice">{$smarty.const.STRING_CUR_PR}</span>:<br><span class="top_cart_price">{$shopping_cart_value_shown|replace:'"':'&quot;'}</span></a>
+
+  {else}{$smarty.const.STRING_CART_PR} {$smarty.const.CART_CONTENT_EMPTY}{/if}
+{/if}
+
+					
+		</span>
+	</center>
+
+{*#авторизированный пользователь*}
+
+
+{else}
+
+<form action="index.php" method=post id="userform">
+  <table  cellpadding="0" align="center" cellspacing=7px;>
+    <tr>
+      <td align="left">{$smarty.const.CUSTOMER_LOGIN}</td>   
+      <td align="left"><input type="text" name="user_login" class="inbr" style="width: 108px; margin-top: 2px;padding-left:2px;" value="Логин" onfocus="if(this.value=='Логин')this.value=''" onfocus="if(this.value=='')this.value='Логин'"></td>
+    </tr>
+	
+    <tr>
+      <td style="padding-top: 6px;" align="left">{$smarty.const.CUSTOMER_PASSWORD}</td>
+      <td align="left">
+	  			<!--input style="width: 108px;" name="user_pw" type="password" class="inbr" -->
+				<input style="width: 108px;margin-top: 2px;padding-left:2px;"  name="user_pw" type="password" class="inbr" value="Пароль" onfocus="if(this.value=='Пароль')this.value=''" onblur="if(this.value=='')this.value='Пароль'"  onkeydown="sform();">
+	</td>
+    </tr>
+	<tr><td colspan="2" align="center"><input type="submit"  style="display:none;">
+	<!--a href="#" onclick="document.getElementById('userform').submit(); return false">{$smarty.const.BUTTON_ENTER_AUTH}</a-->
+	<a href="#" onclick="document.getElementById('userform').submit(); return false">{$smarty.const.BUTTON_ENTER_AUTH}</a>
+	
+<br>
+        <a href="index.php?register=yes">{$smarty.const.REGISTER_LINK}</a>&nbsp;&nbsp;<br>&nbsp;&nbsp;<a href="index.php?logging=yes">{$smarty.const.FORGOT_PASSWORD_LINK}</a></td>
+    </tr>
+  </table>
+  <input type="hidden" name="enter" value="1">
+</form>
+{/if}
+
+
+</div>	<!--#user_short_profile-->	

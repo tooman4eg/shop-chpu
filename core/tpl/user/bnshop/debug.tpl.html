@@ -1,0 +1,35 @@
+{* debug *}
+
+<table cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td valign="top" align="center">
+		{* панель отладочной информации *}
+
+		{if $smarty.const.CONF_DISPLAY_INFO eq 1 and $isadmin eq "yes"}
+		<table cellspacing="0" cellpadding="0" width="100%" class="print">
+			<tr class="mid">
+				<td style="background: url('data/admin/fonbot.gif'); height: 23px;"><img src="data/admin/sep.gif" alt="">
+				</td>
+				<td width="100%" style="background: url('data/admin/fonbot.gif'); height: 23px;">
+					<table cellspacing="0" cellpadding="0" width="100%">
+	    					<tr class="mid">
+	      						<td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">&nbsp;&nbsp;{$smarty.const.STRING_EXE_DATA}:&nbsp;<span id="tgenexe">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      						<td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      						<td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.STRING_PREEXE_DATA}:&nbsp;<span id="tgencompile">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      						<td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      						<td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.BD_DO_TIME}:&nbsp;<span id="tgendb">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      						<td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      						<td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.STRING_ALL_EXETIME}:&nbsp;<span id="tgenall">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      						<td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      						<td width="95%" style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.STRING_DO_COUNT}:&nbsp;<span id="tgensql">0</span></td>
+						</tr>
+      					</table>
+				</td> 
+  			</tr>
+		</table>
+
+		<script type="text/javascript">doLStat('do=stat');</script>
+		{/if}
+
+{* вывод сообщений об ошибках *}
+{if $exploerrors ne ""}{$exploerrors}{/if}

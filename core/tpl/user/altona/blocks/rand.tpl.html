@@ -1,0 +1,22 @@
+{* шаблон статического блока  товаров *}
+
+{if $popular_products}
+<table cellspacing="0" cellpadding="0" width="100%">
+  {section name=i loop=$rand_products}
+  {if $smarty.section.i.index is div by 1}<tr>{/if}
+    <td width="{math equation="100 / x" x=1 format="%d"}%" align="left" valign="top">
+    <table style="border-bottom:solid 1px #eaeaea; padding:4px" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+    <td width="55px"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$rand_products[i].productID}.html{else}index.php?productID={$rand_products[i].productID}{/if}"><img width="50px" src="data/{$rand_products[i].filename}" alt="{$rand_products[i].name}"></a></td>
+    <td class=""><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$rand_products[i].productID}.html{else}index.php?productID={$rand_products[i].productID}{/if}">{$rand_products[i].name}</a><div class="fil"></div><b class="price_2">{if $rand_products[i].cena <= 0}{$smarty.const.STRING_NOPRODUCT_IN}{else}{$rand_products[i].Price}{/if}</b></td>
+    </tr>
+    </table>
+    </td>
+    {if ($smarty.section.i.index+1) is div by 1}</tr>{else}
+    <td><img src="data/{$smarty.const.TPL}/pixel.gif" class="delim" alt=""></td>
+    {/if}
+    {/section}
+</table>
+{else}
+<div align="center">{$smarty.const.STRING_EMPTY_CATEGORY}</div>
+{/if}

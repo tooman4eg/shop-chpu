@@ -1,0 +1,264 @@
+{* главный файл-каркас шаблона магазина *}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+{* подключение файла заголовков *}
+{include file="head.tpl.html"}
+<body>
+{if $smarty.const.CONF_SHOP_BILD eq 1 and $isadmin ne "yes"}
+
+{* сообщение о профилактике *}
+
+<table cellspacing="0" cellpadding="0" width="100%" height="100%">
+  <tr>
+    <td class="profi arc" valign="middle" align="center"><img src="data/{$smarty.const.TPL}/bild.gif" alt="">
+	<br><br>{$smarty.const.STRING_BILD}<br>{$smarty.const.STRING_BILD_DES}</td>
+  </tr>
+</table>
+
+{else}
+
+<table cellspacing="0" cellpadding="0" width="100%"><tr><td valign="top" align="left">
+
+{* панель отладочной информации *}
+
+{if $smarty.const.CONF_DISPLAY_INFO eq 1 and $isadmin eq "yes"}
+<table cellspacing="0" cellpadding="0" width="100%" class="print">
+  <tr class="mid">
+    <td style="background: url('data/admin/fonbot.gif'); height: 23px;"><img src="data/admin/sep.gif" alt=""></td>
+    <td width="100%" style="background: url('data/admin/fonbot.gif'); height: 23px;">
+      <table cellspacing="0" cellpadding="0" width="100%">
+	    <tr class="mid">
+	      <td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">&nbsp;&nbsp;{$smarty.const.STRING_EXE_DATA}:&nbsp;<span id="tgenexe">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      <td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      <td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.STRING_PREEXE_DATA}:&nbsp;<span id="tgencompile">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      <td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      <td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.BD_DO_TIME}:&nbsp;<span id="tgendb">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      <td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      <td style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.STRING_ALL_EXETIME}:&nbsp;<span id="tgenall">0.000</span>&nbsp;{$smarty.const.TIME_SEK}</td>
+	      <td nowrap="nowrap"><img src="data/admin/sep2.gif" alt=""></td>
+	      <td width="95%" style="padding-bottom: 2px;" nowrap="nowrap" class="stat">{$smarty.const.STRING_DO_COUNT}:&nbsp;<span id="tgensql">0</span></td>
+		</tr>
+      </table>
+	</td> 
+  </tr>
+</table>
+<script type="text/javascript">doLStat('do=stat');</script>
+{/if}
+
+{* вывод сообщений об ошибках *}
+{if $exploerrors ne ""}{$exploerrors}{/if}
+
+{* меню *}
+
+<div class="center_main">
+   <div class="bg_body">
+       <div id="bodyWrapper" class="container_24 ofh">
+           <div id="header" class="grid_24">
+	           
+<div class="cl_both"><a class="logo fl_left" href="{$smarty.const.CONF_FULL_SHOP_URL}"><img src="data/{$smarty.const.TPL}/logo.png" alt="" /></a>
+            
+            <div class="fl_right navigation_block" align="right">
+              <div class="cl_both ofh">
+                <div class="cart_bg fl_right"><div>
+                 <div style="padding-left:15px;">{include file="blocks/shopping_cart_info_2.tpl.html"}</div>
+              </div>
+   			</div><div class="cart_sv fl_right"></div>
+                
+<div class="tel_top fl_right" >8 (929) 918 78-53</div>
+                
+</div>                    
+                
+<div class="cl_both ofh"><div class="sub fl_right">
+  <ul class="navigation cl_both">
+  
+<li class="navigation_item un"><div class="wrapper_menu2-l"><div class="wrapper_menu2-r"><div class="wrapper_menu2-c"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}feedback.html{else}index.php?feedback=yes{/if}">Контакты</a></div></div></div></li>
+
+
+
+
+<li class="navigation_item"><div class="wrapper_menu2-l"><div class="wrapper_menu2-r"><div class="wrapper_menu2-c"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}page_2.html{else}index.php?show_aux_page=2{/if}">Вход</a></div></div></div></li>
+                                                                                  
+ 
+  </ul>
+</div>
+</div>
+                    
+                    
+</div></div></div></div></div>
+
+
+<div class="bg_body row_1"><div id="bodyWrapper" class="container_24 ofh"><div class="grid_24">
+<!-- menu cart END-->
+<div class="shadow"> 	
+<div class="main_menu"> 
+  <ul class="menu fl_left">		
+    <li class="menu_item un selected2">
+      <div class="wrapper_menu-t">
+        <div class="wrapper_menu-r">
+          <div class="wrapper_menu-b">
+            <div class="wrapper_menu-l">				
+              <div class="wrapper_menu-tl">					
+                <div class="wrapper_menu-tr">						
+                  <div class="wrapper_menu-bl">							
+                    <div class="wrapper_menu-br"><a href="{$smarty.const.CONF_FULL_SHOP_URL}">Главная</a></div>						
+                  </div>					
+                </div>				
+              </div>			
+            </div>		
+          </div>	
+        </div>
+      </div>
+    </li>
+    <li class="menu_item">
+      <div class="wrapper_menu-t">	
+        <div class="wrapper_menu-r">		
+          <div class="wrapper_menu-b">			
+            <div class="wrapper_menu-l">				
+              <div class="wrapper_menu-tl">					
+                <div class="wrapper_menu-tr">						
+                  <div class="wrapper_menu-bl">							
+                    <div class="wrapper_menu-br"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}page_1.html{else}index.php?show_aux_page=1{/if}">О магазине</a></div>						
+                  </div>					
+                </div>				
+              </div>			
+            </div>		
+          </div>	
+        </div>
+      </div>
+    </li>     
+    <li class="menu_item">
+      <div class="wrapper_menu-t">	
+        <div class="wrapper_menu-r">		
+          <div class="wrapper_menu-b">			
+            <div class="wrapper_menu-l">				
+              <div class="wrapper_menu-tl">					
+                <div class="wrapper_menu-tr">						
+                  <div class="wrapper_menu-bl">							
+                    <div class="wrapper_menu-br"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}news.html{else}index.php?news=yes{/if}">Новости</a></div>						
+                  </div>				
+                </div>				
+              </div>			
+            </div>		
+          </div>	
+        </div>
+      </div>
+    </li>
+    <li class="menu_item">
+      <div class="wrapper_menu-t">	
+        <div class="wrapper_menu-r">		
+          <div class="wrapper_menu-b">			
+            <div class="wrapper_menu-l">				
+              <div class="wrapper_menu-tl">					
+                <div class="wrapper_menu-tr">						
+                  <div class="wrapper_menu-bl">							
+                    <div class="wrapper_menu-br"><a href="{if $smarty.const.CONF_OPEN_SHOPPING_CART_IN_NEW_WINDOW eq 1}javascript:open_window('index.php?do=cart',500,300);{else}{if $smarty.const.CONF_MOD_REWRITE eq 1}cart.html{else}index.php?shopping_cart=yes{/if}{/if}">Корзина</a></div>						
+                  </div>					
+                </div>				
+              </div>			
+            </div>		
+          </div>	
+        </div>
+      </div>
+    </li>
+    <!--li class="menu_item">
+      <div class="wrapper_menu-t">	
+        <div class="wrapper_menu-r">		
+          <div class="wrapper_menu-b">			
+            <div class="wrapper_menu-l">				
+              <div class="wrapper_menu-tl">					
+                <div class="wrapper_menu-tr">						
+                  <div class="wrapper_menu-bl">							
+                    <div class="wrapper_menu-br"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}wide_search.html{else}index.php?search_with_change_category_ability=yes{/if}">{$smarty.const.ADVANCED_SEARCH_LINK}</a></div>						
+                  </div>					
+                </div>				
+              </div>			
+            </div>		
+          </div>	
+        </div>
+      </div>
+    </li-->
+  </ul>
+
+
+{* форма поиска товаров *}
+
+<div class="search fl_right ofh">
+   <form action="index.php" method="get" name="formpoisk" id="formpoisk">{section name=sert loop=$searchstrings}<input type="hidden" name='search_string_{$smarty.section.sert.index}' value='{$searchstrings[sert]}'>{/section}
+	  <div class="input-width fl_left">
+		 <div class="width-setter">        
+            <span><input name="searchstring" type="text" class="go"  value="Введите ключевое слово" onBlur="if(this.value=='') this.value='Введите ключевое слово'" onFocus="if(this.value =='Введите ключевое слово' ) this.value=''"></span>
+		 </div>
+      </div>
+		<input type="image" src="data/{$smarty.const.TPL}/button_search_prod.gif" alt=""  class="button_search_prod fl_left" /></form>
+</div>  
+
+</div></div></div></div></div>
+</div></div></div></div>
+
+{* центральная часть *}
+
+<table cellspacing="0" cellpadding="0" width="990px" align="center">
+  <tr>
+    <td class="container">
+      <table cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+		  
+		  {* левая колонка (если есть блоки) *}
+          
+		  {if $countlb > 0}
+          <td id="left" valign="top" align="center" class="print">
+          <table cellpadding="0" cellspacing="0">
+          <tr>
+          <td>{include file="blocks/cat_black.tpl.html}</td></tr>
+          <tr><td>{include file="blocks_lr.tpl.html" binfo=$left_blocks bclass="hdb_2" nopad=1 balign="center"}
+          <img src="data/{$smarty.const.TPL}/pixel.gif" class="fixwidth" alt=""></td></tr></table>
+          </td>
+          {/if}
+          
+		  <td class="center" align="left" valign="top">
+		  
+		  {* верхние блоки *}
+          
+		  {include file="blocks.tpl.html" binfo=$top_blocks bclass="hdbtop" balign="left"}
+		  
+		  {* вывод центральной страницы *}
+          
+		  {include file="$main_content_template"}
+		  
+		  {* нижние блоки *}
+          
+		  {include file="blocks.tpl.html" binfo=$bottom_blocks bclass="hdbtop" balign="left"}
+          </td>
+		  
+		  {* правая колонка (если есть блоки) *}
+		  
+		  {if $countrb > 0}
+          <td id="right" valign="top" align="center" class="print">
+          {include file="blocks_lr.tpl.html" binfo=$right_blocks bclass="hdb_2" nopad=1 balign="center"}
+          <img src="data/{$smarty.const.TPL}/pixel.gif" class="fixwidth" alt=""></td>
+		  {/if}
+		  
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+{* подвал *}
+<div class="fil4"> </div>
+<table cellspacing="0" cellpadding="0" width="990px" class="print" align="center">
+ <tr>
+  <td class="footl">bnstyle.ru {$smarty.now|date_format:"%Y"} ©<td>
+  <!--td class="footl"><a href=""><img src="data/{$smarty.const.TPL}/banner_02.png" alt=""></a><td>
+  <td class="footc"><a href=""><img src="data/{$smarty.const.TPL}/banner_03.png" alt=""></a></td>
+  <td class="footr"><a href=""><img src="data/{$smarty.const.TPL}/banner_04.png" alt=""></a></td-->
+ </tr>
+</table>
+
+</td></tr></table>
+
+{* прорисовка скрытого ajax бокса *}
+<script type="text/javascript">printcart();</script>
+
+{/if}
+</body></html>

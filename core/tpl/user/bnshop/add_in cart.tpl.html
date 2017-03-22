@@ -1,0 +1,60 @@
+<div id="add_tocart">
+<form action="index.php?productID={$product_info.productID}" method=post name="HiddenFieldsForm" id="DetailCartForm">
+ {if $smarty.const.CONF_OPEN_SHOPPING_CART_IN_NEW_WINDOW eq 1}
+  {if $smarty.const.CONF_SHOW_ADD2CART eq 1 &&  ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+
+   <table cellspacing="0" cellpadding="0" class="print">
+    <tr>
+     <td>
+      <a href="#" onclick="open_window('index.php?do=cart&amp;addproduct={$product_info.productID}
+	{counter name='select_counter_hidden' start=0 skip=1 print=false}
+	{counter name='select_counter_hidden_extra' start=0 skip=1 print=false}
+	
+	{section name=i loop=$product_extra}
+	{if $product_extra[i].option_type eq 1}
+	 {section name=s loop=$product_extra[i].option_show_times}&amp;option_select_hidden_{counter name=select_counter_hidden}='+document.HiddenFieldsForm.option_select_hidden_{counter name=select_counter_hidden_extra}.value+'{/section}
+	{/if}
+	{/section}&amp;multyaddcount='+document.HiddenFieldsForm.multyaddcount.value+'',550,300);"></a>
+   </td>
+   <td >
+    <input type={if $smarty.const.CONF_MULTYCART==0}hidden{else}text{/if} value="1" name="multyaddcount" {if $smarty.const.CONF_MULTYCART==1}size="2" {/if}>
+     <a href="#" onclick="open_window('index.php?do=cart&amp;addproduct={$product_info.productID}{counter name='select_counter_hidden' start=0 skip=1 print=false}{counter name='select_counter_hidden_extra' start=0 skip=1 print=false}{section name=i loop=$product_extra}{if $product_extra[i].option_type eq 1}{section name=s loop=$product_extra[i].option_show_times}&amp;option_select_hidden_{counter name=select_counter_hidden}='+document.HiddenFieldsForm.option_select_hidden_{counter name=select_counter_hidden_extra}.value+'{/section}{/if}{/section}&amp;multyaddcount='+document.HiddenFieldsForm.multyaddcount.value+'',550,300);">{$smarty.const.ADD_TO_CART_STRING}</a>
+   </td>
+  </tr>
+ </table>
+ {/if}
+
+ {else}
+  {if $smarty.const.CONF_CART_METHOD eq 2}
+   {if $smarty.const.CONF_SHOW_ADD2CART eq 1 && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+    <table cellspacing="0" cellpadding="0" class="print">
+     <tr>
+      <td>
+	<a href="#" onclick="doLoad('do=cart&amp;addproduct={$product_info.productID}{counter name='select_counter_hidden' start=0 skip=1 print=false}{counter name='select_counter_hidden_extra' start=0 skip=1 print=false}{section name=i loop=$product_extra}{if $product_extra[i].option_type eq 1}{section name=s loop=$product_extra[i].option_show_times}&amp;option_select_hidden_{counter name=select_counter_hidden}='+document.HiddenFieldsForm.option_select_hidden_{counter name=select_counter_hidden_extra}.value+'{/section}{/if}{/section}&amp;xcart=yes&amp;multyaddcount='+document.HiddenFieldsForm.multyaddcount.value+''); return false"></a>
+     </td>
+                        <td style="padding-left: 4px;"><input type={if $smarty.const.CONF_MULTYCART==0}hidden{else}text{/if} value="1" name="multyaddcount" {if $smarty.const.CONF_MULTYCART==1}size="2" style="margin-right: 4px; width: 16px;"{/if}>
+                          <a href="#" onclick="doLoad('do=cart&amp;addproduct={$product_info.productID}{counter name='select_counter_hidden' start=0 skip=1 print=false}{counter name='select_counter_hidden_extra' start=0 skip=1 print=false}{section name=i loop=$product_extra}{if $product_extra[i].option_type eq 1}{section name=s loop=$product_extra[i].option_show_times}&amp;option_select_hidden_{counter name=select_counter_hidden}='+document.HiddenFieldsForm.option_select_hidden_{counter name=select_counter_hidden_extra}.value+'{/section}{/if}{/section}&amp;xcart=yes&amp;multyaddcount='+document.HiddenFieldsForm.multyaddcount.value+''); return false">{$smarty.const.ADD_TO_CART_STRING}</a></td>
+                      </tr>
+                    </table>
+                    {/if}
+                    {else}
+                    {if $smarty.const.CONF_SHOW_ADD2CART eq 1 && ( $smarty.const.CONF_CHECKSTOCK==0 || $product_info.in_stock > 0 ) }
+                   <input type="hidden" name="cart_x" value="{$product_info.productID}">
+   		   <input type={if $smarty.const.CONF_MULTYCART==0}hidden{else}text{/if} value="1" name="multyaddcount" {if $smarty.const.CONF_MULTYCART==1}size="2" {/if}>
+                          <a href="#" onclick="document.getElementById('DetailCartForm').submit(); return false" class="add_to_cart">{$smarty.const.ADD_TO_CART_STRING}</a>
+                    {/if}
+                    {/if}
+                    {/if}
+
+                    {counter name='select_counter_hidden' start=0 skip=1 print=false}
+
+                    {section name=i loop=$product_extra}
+                     {if $product_extra[i].option_type eq 1}
+                      {section name=s loop=$product_extra[i].option_show_times}
+               	        <input type=hidden name='option_select_hidden_{counter name=select_counter_hidden}' value='1'>
+                      {/section}
+                     {/if}
+                    {/section}
+
+                  </form>
+</div>

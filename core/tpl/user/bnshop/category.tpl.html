@@ -1,0 +1,78 @@
+
+{*заголовок каталога*}
+{assign var="preheader" value="<a href='`$smarty.const.ADMIN_FILE`?categoryID=`$selected_category.categoryID`&amp;eaction=cat' title='`$smarty.const.ADMIN_ADMIN_MENUNEW1`' style='float: right;'>Редактировать категорию</a>"}
+
+
+
+{*хлебные крошки*}
+
+
+<div id="path">
+
+<table cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td class="cbt" align="left">
+	{if $isadmin eq "yes"}<span style="float: right;">{$preheader}</span>{/if}
+	
+	{if $smarty.const.CONF_SHOW_COUNTPROD eq 1}
+	<span style="float: right;">{$smarty.const.STRING_COUNTPROD}: {$products_to_showc}</span>{/if}
+	{php} $x=0; {/php}
+	{section name=i loop=$product_category_path}{if $product_category_path[i].categoryID != 1} {php} $x=$x+1; if ($x!=1) echo"»";{/php} 
+	<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}category_{$product_category_path[i].categoryID}.html{else}index.php?categoryID={$product_category_path[i].categoryID}{/if}">{$product_category_path[i].name}</a>{/if}{/section}
+	</td>
+	
+  </tr>
+</table>
+</div>
+{* вывод описания категории (если есть) *}
+
+
+{if $selected_category.description}
+{include file="header.tpl.html" header=$smarty.const.STRING_CATEGORY_DESK}
+<table cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td class="hdbtop" align="left">
+	{if $selected_category.picture}<img src="data/category/{$selected_category.picture}" alt="{$selected_category.name}" align="left" style="margin: 0px 6px 6px 0px;">{/if}{$selected_category.description}
+	</td>
+  </tr>
+</table>
+
+{/if}
+
+
+
+{*таблица привьюх товара*}
+<table cellspacing="0" cellpadding="0" width="100%" border=0>
+  {section name=u loop=$products_to_show}
+  {if $smarty.section.u.index is div by $smarty.const.CONF_COLUMNS_PER_PAGE}<tr>{assign var="helpcounter" value=0}{/if}
+	{assign var="helpcounter" value=$helpcounter+1}
+    <td width="{math equation="100 / x" x=$smarty.const.CONF_COLUMNS_PER_PAGE format="%d"}%" align="left" valign="top">
+    {include file="product_brief.tpl.html" product_info=$products_to_show[u]}
+    </td>
+    {if ($smarty.section.u.index+1) is div by $smarty.const.CONF_COLUMNS_PER_PAGE || $products_to_show_counter eq $smarty.section.u.index+1}
+	</tr>
+    <tr>
+	{section name=e loop=$smarty.const.CONF_COLUMNS_PER_PAGE max=$helpcounter}
+    {assign var="idnrecat" value=$smarty.section.u.index-$helpcounter+$smarty.section.e.index+1}
+    <td align="left">
+	  
+	</td>
+    {if $smarty.section.e.index+1 ne $smarty.const.CONF_COLUMNS_PER_PAGE}<td><img src="data/{$smarty.const.TPL}/pixel.gif" class="delim" alt=""></td>{/if}
+    {/section}
+    </tr>
+  {else}<td class="delim"><img src="data/{$smarty.const.TPL}/pixel.gif" class="delim" alt=""></td>{/if}
+  {/section}
+</table>
+
+<!--каталог товаров-->
+				<span class="catalog_title">{if $isadmin eq "yes"}{assign var="postheader" value=`$preheader``$categoryName`}{else}{assign var="postheader" value=$categoryName}{/if}</span>
+
+
+<!--pagination-->
+<div id="pagination">
+	{* форма навигации по страницам *}
+	{if $catalog_navigator}
+		{$catalog_navigator}
+	{/if}
+</div>
+<!--pagination-->

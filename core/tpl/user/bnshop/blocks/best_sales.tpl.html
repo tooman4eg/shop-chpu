@@ -1,0 +1,38 @@
+{php}
+$statusID = 2; # берутся заказы со статусом 2 и выше (2-Новый,...,5-Доставлен)
+$olderday = 7; # берутся заказы за последние семь дней
+$prodnum = 5;  # берутся пять товаров наибольших по количеству продаж
+
+function BestSalesRecursiveCat($catID,$arrayID=array()) {
+        $data = db_query("SELECT categoryID FROM ".CATEGORIES_TABLE." WHERE parent=".$catID);
+        while ($row = db_fetch_assoc($data)) $arrayID = BestSalesRecursiveCat($row['categoryID'],$arrayID);
+        $arrayID[]=$catID;
+        return $arrayID; }
+
+$categoryID = $this->get_template_vars('categoryID');
+$addon = isset($categoryID)?"AND p.categoryID IN (".implode(",",BestSalesRecursiveCat($categoryID)).")":"";
+$data = mysql_query("
+SELECT count(*) AS count, p.name, p.productID FROM ".DB_PRFX."orders AS o
+LEFT JOIN ".DB_PRFX."ordered_carts AS oc USING (orderID)
+LEFT JOIN ".DB_PRFX."products AS p ON p.product_code=mid(oc.name,2,locate(']',oc.name)-2)
+WHERE o.statusID>=$statusID AND o.order_time + INTERVAL $olderday DAY > NOW() $addon
+GROUP BY oc.name
+ORDER BY count DESC
+LIMIT $prodnum
+");
+while ($row = mysql_fetch_assoc($data)) $r[] = $row;
+$this->assign("best_sales", $r);
+{/php}
+
+<table width="100%">
+<tbody><tr><td>
+  {section name=i loop=$best_sales}
+        <div align="left"><a href="product_{$best_sales[i].productID}.html">{$best_sales[i].name}</a>
+        <div align="right"><b>{$best_sales[i].count}</b></div>
+        <hr>
+        </div>
+  {sectionelse}
+        <div align="center">За последнюю неделю не продано ни одного товара в этой категории</div>
+  {/section}  
+</td></tr></tbody>
+</table>

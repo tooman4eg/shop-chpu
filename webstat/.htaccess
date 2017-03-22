@@ -1,0 +1,7 @@
+AuthType Basic
+AuthName "/www/bnshop.ru/webstat"
+AuthUserFile /var/www/a60373/data/etc/83240705.passwd
+DirectoryIndex index.html
+<Limit GET POST>
+	require valid-user
+</Limit>

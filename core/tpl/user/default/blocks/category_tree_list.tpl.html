@@ -1,0 +1,23 @@
+{* шаблон блока дерева категорий *}
+
+{if $categories_tree && $categories_tree_count>2}
+<div align="left">
+  {section name=h loop=$categories_tree}
+  {if $categories_tree[h].categoryID != 1}
+
+  {if $categories_tree[h].level >=2}
+	  {assign var=maxmmm value=$smarty.section.h.index+1}
+		<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}category_{$categories_tree[h].categoryID}.html
+			{else}index.php?categoryID={$categories_tree[h].categoryID}{/if}" {if $categoryID == $categories_tree[h].categoryID}class="bf"{/if}>
+				{$categories_tree[h].name}</a> &nbsp;
+
+
+{/if}
+
+ 
+  {/if}
+  {/section}
+</div>
+{else}
+<div align="center">{$smarty.const.STRING_NO_CATEGORIES}</div>
+{/if}

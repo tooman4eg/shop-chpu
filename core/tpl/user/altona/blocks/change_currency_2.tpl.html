@@ -1,0 +1,11 @@
+{* шаблон блока выбора валюты *}
+
+<span style="color:#666; font-size:13px">¬ыберите валюту:</span>
+<form method="post" action="" name='ChangeCurrencyForm' id='ChangeCurrencyForm'>
+  <select style="border:solid 1px #FFF; color:#999" name='current_currency' onchange='_changeCurrency()'>
+    {section name=d loop=$currencies}
+    <option value='{$currencies[d].CID}' {if $currencies[d].CID eq $current_currency} selected {/if}>{$currencies[d].Name}</option>
+    {/section}
+  </select>
+{if $order}<input type="hidden" name="InvId" value="{$order.orderID}">{/if}
+</form>

@@ -1,0 +1,26 @@
+{*Блок вывода баннеров (слайдер) *}
+{if $banners}
+<link rel="stylesheet" type="text/css" href="data/{$smarty.const.TPL}/css/style.css" title="styles1" />
+<script type="text/javascript" src="data/{$smarty.const.TPL}/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="data/{$smarty.const.TPL}/js/jquery.nivo.slider.pack.js"></script>
+<script type="text/javascript" src="data/{$smarty.const.TPL}/js/jquery.nivo.slider.settings.js"></script>
+	
+	<div id="banner">
+        <div id="slider-wrapper">  
+            <div id="slider" class="nivoSlider">
+				{section name=i loop=$banners}
+					<a href="{$banners[i].url}"><img style="width: 650px; height: 250px;" src="{$banners[i].img}" alt="" 
+					{if $banners[i].text ne ""}title="#a_{$smarty.section.i.index}"{/if}
+					></a>
+				{/section}
+
+            </div>
+				{section name=z loop=$banners}
+				{if $banners[z].text ne ""}
+				<div id="a_{$smarty.section.z.index}" class="nivo-html-caption"><p>{$banners[z].text}</p></div> 
+				{/if}
+				{/section}
+		</div>
+     </div>
+
+{/if}

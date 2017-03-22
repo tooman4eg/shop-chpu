@@ -1,0 +1,541 @@
+/*
+*Таблица стилей ядл магазина bnshop.ru
+*/
+
+body {	
+	 background:#042555 url('image/bg.gif');
+	 margin:0;
+	padding:0;
+	font:14px Arial;
+color:#4d4d4d;	
+}
+
+h1 { font-size:16px;
+	color:#42437A;
+	font-family:Arial,Helvetica;
+	
+	}
+	
+p {
+margin:0;
+padding:0;
+font:14px Arial;
+color:#4d4d4d;
+}
+
+a {
+color:#0b57c5;
+font-font:  Arial;
+}
+
+.main {
+	margin: 0 auto;
+	align:center;
+	background:#f1f1f1;
+	width: 970px;
+border-radius: 7px;
+}
+
+#header
+{
+height:205px;
+background: #f1f1f1 url('image/header_bg.gif');
+
+}
+        
+#logoblock {
+margin:15px 0 0 33px;
+float:left;
+/*min-height:205px;*/
+}
+
+.top_menu {
+background: #042555 url('image/top_menu_bg.gif');
+height:24px;
+padding-top:10px;
+}
+
+.top_menu a {
+color:white;
+font-zise:16px;
+text-decoration:none;
+font-family:Arial,Helvetica;
+margin:0 20px ;
+}
+
+.fixed_menu {
+padding:15px 0 ;
+}
+
+.fixed_menu a{
+color:#e0030a;
+font-zise:16px;
+text-decoration:none;
+font-family:Arial,Helvetica;
+margin:0 10px ;
+}
+
+/*основной блок с колонками информации*/
+#content
+{
+/*margin:0 33px;*/
+padding-bottom:50px;
+}
+
+.tel {
+color:#d70007;
+font: 20px Arial;
+font-style:italic;
+}
+
+.top_mail, .top_mail a, .top_mail a:hover, .top_mail a:visited
+ {
+color:#0b57c5;
+font: 20px Arial;
+font-style:italic;
+text-decoration:underline;
+}
+
+#category_tree ul li{
+margin:0px;
+padding:0px;
+list-style:none;
+
+}
+
+
+#category_tree{
+padding:0 10px 0 33px;
+
+}
+
+#category_tree a{
+color:#0b57c5;
+font: 16px Arial;
+text-decoration:none;
+}
+#category_tree a:hover{
+text-decoration:underline;
+}
+
+#category_tree  .bf  {
+color:red;
+}
+
+#logotype {
+margin:22px 0 0 -10px;
+color:white;
+font: 18px Arial;	
+font-style:italic;
+text-align:center;
+}
+
+.catalog_title {
+color:#0b57c5;
+font: 18px Arial;
+padding-top:20px;
+text-decoration:none;
+}
+
+#good_title {
+min-height:51px;
+/*width: 146px;*/
+color:#0b57c5;
+font: 14px Arial;
+text-decoration:none;
+}
+
+ #user_short_profile {
+ width:217px;
+ border: 1px solid #dedede;
+ border-radius: 10px; /* Радиус скругления */
+ margin-left:22px;
+ margin-right:22px;
+ padding: 15px 5px 15px 15px;
+ }
+ 
+ #user_short_profile ul {
+ padding-left:0px;
+ }
+ 
+ #user_short_profile   {
+ font:Arial 16px;
+ color:#9c9c9c;
+ font-style:italic;
+  }
+  
+  #user_short_profile  input {
+  border-radius:7px;
+  border:1px solid #9c9c9c;  
+  }
+  
+  #user_short_profile a{
+  font:Arial 16px;
+  text-decoration:none;
+  font-style:italic;
+  }
+ 
+#left #  a {
+ font: 14px Arial;
+ font-style:italic;
+ 
+ color:#0b57c5;
+}
+
+ .userpic  {
+ float:left;
+ margin:10px 15px; 
+ }
+ 
+ .u_s_name {
+	color:#4d4d4d;
+	font: 16px Arial;
+	text-decoration:none;
+	font-style:italic;
+	padding:10px 0;
+	margin:10px 0;
+ }
+ .u_s_name  li {
+ list-style:none;
+ }
+ 
+ .u_cart{
+ color:#eb2518;
+ text-align:center;
+ font: 14px Arial;
+ font-style:italic;
+ }
+ 
+ #months_good {
+ margin:25px 0 0 0; 
+ }
+ 
+ #v_scroll_box_1, #v_scroll_box_2, #v_scroll_box_3, #v_scroll_box_4, #v_scroll_box_5 { 
+ width:135px;
+ }
+ 
+ .month_good_title, .block_title {
+ font: 18px Arial;
+ color:#0b57c5; 
+ 
+ }
+ 
+ #month_good_pic
+ {
+ padding:7px 0 0 33px;
+ 
+ }
+ 
+ #shapka { 
+/* float:left;*/
+ }
+ 
+ #search_form {
+ padding:20px 15px 10px 25px;
+ }
+ 
+ .search_input {
+ border: 1px solid #0b57c5;
+ border-radius: 7px; /* Радиус скругления */
+ background:#f1f1f1;
+ }
+ 
+ .search_label {
+ font: 16px Arial;
+ color: #0b57c5;
+ font-style:italic;
+ }
+ 
+ #cart_header  {
+ border: 1px solid #fff;
+ border-radius: 7px; /* Радиус скругления */
+ margin: 20px 17px 0 27px;
+ padding:7px;
+ 
+ }
+
+ #cart_header  a {
+ color:#fff; 
+ font: 16px Arial;
+ font-style:italic;
+ text-decoration:none;
+ }
+ 
+  #cart_header  .onprice  {
+  font: 12px Arial;    
+  font-style:italic;
+  }
+  
+  #cart_header  .top_cart_price  {
+  font: 18px Arial;  
+  font-style:italic;
+  }
+ 
+ #good_descr {
+ margin-left:4px;
+ }
+ 
+ .character, .character_id   {
+ font: 12px Arial;
+ /*color:#4e4e4e;*/
+ color:#878787;
+ }
+#full_description {
+margin:15px 0;
+}
+
+#feedback {
+margin:10px 0;
+font: 13px Arial;
+color:#000;
+}
+ 
+ .avaliable {
+ font: 13px Arial;
+ color:#82ac1d;
+ font-weight:bold;
+ }
+ .unavaliable {
+ font: 13px Arial;
+ color:#e33035;
+ font-weight:bold;
+ }
+ 
+ #good_price {
+ width:140px;
+ border: 1px solid #cecece;
+ border-radius: 15px; /* Радиус скругления */
+ margin:7px 0 35px 0;
+ padding:2px;
+ font: 16px Arial;
+ color:#eb2518;
+ text-align:center;
+ font-weight:bold;
+ behavior: url("data/bnshop/PIE.htc"); 
+ }
+ 
+#good_price .price{
+padding:7px 0 25px 0;
+}
+ 
+  #good_title_f {
+ font: 16px Arial; 
+ color:#0b57c5;
+  }
+ 
+/*блок новостей */
+#news {
+margin: 20px 20px 0 33px;
+}
+
+.news_date {
+color:#9e9e9e;
+font: 14px Arial;
+}
+.news_announce, .news_announce_title{
+color:#4c4c4c;
+font: 12px Arial;
+}
+.news_link{
+font: 12px Arial;
+text-decoration:none;
+}
+
+.news_archive_link{}
+
+
+#pagination
+{
+margin-top:15px;
+text-align:center;
+}
+#pagination a {
+text-decoration:underline;
+font: 13px Arial;
+}
+#pagination .active_page 
+{
+font: 14px Arial;
+color:#000;
+font-weight:bold;
+text-decoration:none;
+}
+
+
+
+#subcategories {
+margin-top:20px;
+color:#0b57c5;
+}
+
+#subcategories li {
+list-style: none;
+background: url('image/li.gif') ;
+background-repeat: no-repeat;
+background-position: 5px 10px;
+padding-left: 14px; 
+}
+
+#subcategories a  {
+font: 12px Arial;
+color:#0b57c5;
+text-decoration:none;
+}
+
+#stars {
+min-height:20px;
+margin-top:5px;
+}
+
+
+/* Rating styles */
+
+.unit-rating {
+	list-style:none;
+	height:12px;
+	position:relative;
+	margin:0;
+	padding:0;
+	background:url("star-vote.gif") repeat-x left center;
+}
+.unit-rating li {
+	text-indent:-90000px;
+	float:left;margin:0;padding:0;	
+	}
+	
+.unit-rating li a{
+	outline:none;
+	display:block;
+	width:12px;
+	height:12px;
+	text-decoration:none;
+	/*text-indent:-9000px;*/
+	z-index:20;
+	position:absolute;
+	padding:0;	
+	}
+	
+.unit-rating li.current-rating{
+	z-index:2;
+	left:0;
+	height:12px;}
+
+
+.unit-rating li.current-rating1{
+background:url("star.gif") repeat-x left center;
+height:12px;
+width:12px;
+}
+.unit-rating li.current-rating2{
+background:url("star.gif") repeat-x left center;
+
+height:12px;width:24px;
+}
+.unit-rating li.current-rating3{
+background:url("star.gif") repeat-x left center;
+height:12px;
+width:36px;
+}
+.unit-rating li.current-rating4{
+background:url("star.gif") repeat-x left center;
+height:12px;
+width:48px;
+}
+.unit-rating li.current-rating5{
+background:url("star.gif") repeat-x left center;
+height:12px;
+width:60px;
+}
+.unit-rating li a:hover{z-index:3;left:0;background:url("star.gif") repeat-x  left center}
+.unit-rating a.r1-unit{left:0}
+.unit-rating a.r1-unit:hover{width:12px}
+.unit-rating a.r2-unit{left:12px}
+.unit-rating a.r2-unit:hover{width:24px}
+.unit-rating a.r3-unit{left:24px}
+.unit-rating a.r3-unit:hover{width:36px}
+.unit-rating a.r4-unit{left:36px}
+.unit-rating a.r4-unit:hover{width:48px}
+.unit-rating a.r5-unit{left:48px}
+.unit-rating a.r5-unit:hover{width:60px}
+
+
+#preview_pic {
+width:150;
+overflow:hidden;
+text-align:center;
+margin-right:17px;
+}
+
+#product_description {
+width:100%;
+}
+#center {
+margin-right:17px;
+}
+
+#product_description a, .cbt a {
+font: 14px Arial;
+color:#4e4e4e;
+}
+
+#good_price .add_to_cart {
+ font: 16px Arial;
+ color:#eb2518;
+ text-decoration:underline; 
+}
+
+#descr {
+padding:0 30px;
+ font: 12px Arial;
+}
+
+#path {
+margin:5px 0;
+}
+
+#DetailCartForm {
+margin:0px;
+}
+
+#add_tocart{
+margin:7px 0 4px 0;
+}
+#footer {
+	width:970px;			
+	margin: 0 auto;	
+}
+
+#copyrights {
+width:70%;
+color:#f1f1f1;
+font: 16px Arial;
+font-style:italic;
+text-align:left;
+float:left;
+}
+
+#contacts {
+
+float:right;
+text-align:right;
+}
+
+#contacts  a {
+color:#0b57c5;
+}
+
+.phone {
+color:#fff;
+font: 16px Arial;
+font-style:italic;
+}
+
+#v_container_1, #v_container_2, #v_container_3, #v_container_4, #v_container_5,
+#v_scroll_box_3 
+
+ {
+width:135px;
+}
+tr.dtree:hover,tr.dtree:hover a,tr.dtree a:hover{color:#ff6600}
+
+.articles {   padding: 0px 10px 0px 33px;}

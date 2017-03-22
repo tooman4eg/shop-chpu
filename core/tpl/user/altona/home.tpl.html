@@ -1,0 +1,136 @@
+{* шаблон вывода спецпредложений *}
+
+{if $special_offers}
+
+<table cellspacing="0" cellpadding="0" width="100%">
+  {section name=i loop=$special_offers}
+  {if $smarty.section.i.index is div by $smarty.const.CONF_TAB_COUNT_IN_HOME}
+  <tr>
+  {/if}
+    <td width="{math equation="100 / x" x=$smarty.const.CONF_TAB_COUNT_IN_HOME format="%d"}%" align="left" valign="top"><table class="block_bg" cellspacing="0"><tr><td>
+
+	{* формирование названия товара *}
+	
+	{if $smarty.const.CONF_MOD_REWRITE eq 1}
+      {assign var="link" value="<a href='product_`$special_offers[i].productID`.html'>`$special_offers[i].name`</a>"}
+    {else}
+      {assign var="link" value="<a href='index.php?productID=`$special_offers[i].productID`'>`$special_offers[i].name`</a>"}
+    {/if}
+    {assign var="preheader" value="<a href='`$smarty.const.ADMIN_FILE`?productID=`$special_offers[i].productID`&amp;eaction=prod' title='`$smarty.const.STRING_EDITPR`' style='float: right;'>+</a>"}
+    {if $isadmin eq "yes"}{assign var="postheader" value=`$preheader``$link`}{else}{assign var="postheader" value=$link}{/if}
+
+	{* вывод названия товара *}
+	
+	{include file="header.tpl.html" header=$postheader}
+	
+    
+	{* вывод описания товара и его фотографии *}
+	
+	<table cellspacing="0" cellpadding="0" width="100%">
+      <tr>
+	    <td class="hdbtop" valign="top" align="left">
+          <table cellspacing="0" cellpadding="0" width="100%">
+		    <tr>
+              
+			  {* вывод фотографии слева (если включено в настройках) *}
+			  
+			  {if $smarty.const.CONF_DISPLAY_FOTO eq 1}
+              <td class="imboxl"><div align="right" style="position: relative; float: right;"><div class="semafor sl"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}"><img src="data/{$smarty.const.TPL}/pixel.gif" style="margin: 0px;" alt="" width="70" height="70"></a></div><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}"><img src="data/{$special_offers[i].default_picture}" alt="{$special_offers[i].name}"></a></div></td>
+			  {* <a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}"><img src="data/{$special_offers[i].default_picture}" alt="{$special_offers[i].name}"></a> *}
+			  {/if}
+			  
+			  {* вывод краткого описания товара *}
+			  
+			  <td width="100%" align="left" valign="top">{if $special_offers[i].brief_description}{$special_offers[i].brief_description}{/if}</td>
+
+			  {* вывод фотографии справа (если включено в настройках) *}
+			  
+			  {if $smarty.const.CONF_DISPLAY_FOTO eq 0}
+			  <td class="imboxr"><div align="right" style="position: relative; float: right;"><div class="semafor sr"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}"><img src="data/{$smarty.const.TPL}/pixel.gif" style="margin: 0px;" alt="" width="70" height="70"></a></div><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}"><img src="data/{$special_offers[i].default_picture}" alt="{$special_offers[i].name}"></a></div></td>
+			  {* <a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}"><img src="data/{$special_offers[i].default_picture}" alt="{$special_offers[i].name}"></a> *}
+			  {/if}
+			
+			</tr>
+		  </table>
+		</td>
+	  </tr>
+	</table>
+
+{* вывод блока товара *}
+	
+	<table cellspacing="0" cellpadding="0" width="100%">
+	  <tr>
+	    <td class="hdbtop" align="left">
+          <table cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left">{* ссылка подробнее... *}
+	           <table cellspacing="0" cellpadding="0">
+	            <tr>
+                 <td><img src="data/{$smarty.const.TPL}/az_button_left.gif" alt=""></td>
+	             <td class="knop_c"><a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$special_offers[i].productID}.html{else}index.php?productID={$special_offers[i].productID}{/if}">{$smarty.const.STRING_MOREPR}</a></td>
+                 <td><img src="data/{$smarty.const.TPL}/az_button_right.gif" alt=""></td>
+               </tr>
+	          </table>
+             </td>
+              <td align="left" width="100%">{* вывод кнопки добавления товара в корзину *}
+                
+				<table cellspacing="0" cellpadding="0">
+				  <tr>
+				    <td style="padding-left: 8px;" align="left">
+                      {if $smarty.const.CONF_SHOW_ADD2CART eq 1  && $smarty.const.CONF_DISP_INDEXCART eq 1}
+                      <form action="index.php?categoryID={$special_offers[i].categoryID}&amp;prdID={$special_offers[i].productID}" method=post id="HiddenFieldsForm_{$special_offers[i].productID}" name="HiddenFieldsForm_{$special_offers[i].productID}">
+                        {if $smarty.const.CONF_OPEN_SHOPPING_CART_IN_NEW_WINDOW eq 1}
+					    <table cellspacing="0" cellpadding="0">
+						  <tr>
+						    <td><a href="#" onclick="open_window('index.php?do=cart&amp;addproduct={$special_offers[i].productID}&amp;multyaddcount='+document.HiddenFieldsForm_{$special_offers[i].productID}.multyaddcount.value+'',400,300);"><img src="data/{$smarty.const.TPL}/az_button_left_2.gif" alt=""></a></td>
+							<td class="knop_c_2"><input type={if $smarty.const.CONF_MULTYCART==0}hidden{else}text{/if} value="1" name="multyaddcount" {if $smarty.const.CONF_MULTYCART==1}size="2" style="width: 12px; border:none; background:transparent; font-size:11px; color:#F00; font-weight:bold;"{/if}></td><td class="knop_c_2"><a href="#" onclick="open_window('index.php?do=cart&amp;addproduct={$special_offers[i].productID}&amp;multyaddcount='+document.HiddenFieldsForm_{$special_offers[i].productID}.multyaddcount.value+'',400,300);">{$smarty.const.ADD_TO_CART_STRING}</a></td><td><img src="data/{$smarty.const.TPL}/az_button_right_2.gif" alt=""></td>
+						  </tr>
+						</table>
+						{else}
+						  {if $smarty.const.CONF_CART_METHOD eq 2}
+						  <table cellspacing="0" cellpadding="0">
+						    <tr>
+						      <td><a href="#" onclick="doLoad('do=cart&amp;addproduct={$special_offers[i].productID}&amp;xcart=yes&amp;multyaddcount='+document.HiddenFieldsForm_{$special_offers[i].productID}.multyaddcount.value+''); return false"><img src="data/{$smarty.const.TPL}/az_button_left_2.gif" alt=""></a></td>
+							  <td class="knop_c_2"><input type={if $smarty.const.CONF_MULTYCART==0}hidden{else}text{/if} value="1" name="multyaddcount" {if $smarty.const.CONF_MULTYCART==1}size="2" style="width: 12px; border:none; background:transparent; font-size:11px; color:#F00; font-weight:bold;"{/if}></td><td class="knop_c_2"><a href="#" onclick="doLoad('do=cart&amp;addproduct={$special_offers[i].productID}&amp;xcart=yes&amp;multyaddcount='+document.HiddenFieldsForm_{$special_offers[i].productID}.multyaddcount.value+''); return false">{$smarty.const.ADD_TO_CART_STRING}</a></td><td><img src="data/{$smarty.const.TPL}/az_button_right_2.gif" alt=""></td>
+						    </tr>
+						  </table>
+						  {else}
+						  <table cellspacing="0" cellpadding="0">
+						    <tr>
+						      <td><a href="#" onclick="document.getElementById('HiddenFieldsForm_{$special_offers[i].productID}').submit(); return false"><img src="data/{$smarty.const.TPL}/az_button_left_2.gif" alt=""></a></td>
+							  <td class="knop_c_2"><input type={if $smarty.const.CONF_MULTYCART==0}hidden{else}text{/if} value="1" name="multyaddcount" {if $smarty.const.CONF_MULTYCART==1}size="2" style="width: 12px; border:none; background:transparent; font-size:11px; color:#F00; font-weight:bold;"{/if}><input type="hidden" name="cart_{$special_offers[i].productID}_x" value="{$special_offers[i].productID}"></td><td class="knop_c_2"><a href="#" onclick="document.getElementById('HiddenFieldsForm_{$special_offers[i].productID}').submit(); return false">{$smarty.const.ADD_TO_CART_STRING}</a></td><td><img src="data/{$smarty.const.TPL}/az_button_right_2.gif" alt=""></td>
+						    </tr>
+						  </table>
+						  {/if}
+					    {/if}
+					  </form>
+                      {/if}
+					</td>
+			      </tr>
+				</table></td>
+              <td align="right">
+			    <table cellspacing="0" cellpadding="0">
+                  <tr>
+				    <td class="price">{if $special_offers[i].cena <= 0}{$smarty.const.STRING_NOPRODUCT_IN}{else}{$special_offers[i].Price}{/if}</td>
+				  </tr>
+                </table>
+              </td>
+			</tr>
+	      </table>
+		</td>
+      </tr>
+	</table>	
+</td></tr></table> <div class="fil5"></div>	
+    
+    </td>
+ 
+  {if ($smarty.section.i.index+1) is div by $smarty.const.CONF_TAB_COUNT_IN_HOME}
+  </tr>
+  {else}
+    <td><img src="data/{$smarty.const.TPL}/pixel.gif" class="delim" alt=""></td>
+  {/if}
+
+{/section}
+</table>
+</td></tr></table>
+{/if}

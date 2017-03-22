@@ -1,0 +1,13 @@
+{*Çâåçäû*}		
+{if $product_info.customer_votes > 0 && $smarty.const.CONF_USE_RATING eq 1}
+{section name=i loop=5}
+	{if $smarty.section.i.index<$product_info.customers_rating|round}
+		<img src="data/{$smarty.const.TPL}/image/star.gif">		
+	{/if} 
+{/section} 
+{else}
+	&nbsp;
+{/if} 
+ {*#Çâåçäû*}		
+
+ 

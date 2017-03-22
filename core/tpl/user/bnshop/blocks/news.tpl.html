@@ -1,0 +1,27 @@
+{* шаблон блока новостей *}
+<div id="news"> 
+	<center>
+		<span class="block_title">Новости</span><br>
+	</center>
+
+{if $news_array}
+<div  id="announce">
+  {section name=u loop=$news_array}
+	{if $smarty.section.u.index ne 0}
+		<br>
+	{/if}
+	<span class="news_date">{$news_array[u].add_date}</span>
+		<!--span class="news_announce">{$news_array[u].textToPrePublication}</span-->
+	<!--span class="news_link"-->
+  	<a  class="news_announce_title" href="
+		{if $smarty.const.CONF_MOD_REWRITE eq 1}
+			show_news_{$news_array[u].NID}.html
+		{else}
+			index.php?fullnews={$news_array[u].NID}
+		{/if}"><span class="news_announce_title">{$news_array[u].title}</span>	
+		</a>
+  {/section}
+</div>
+{/if}
+
+</div>

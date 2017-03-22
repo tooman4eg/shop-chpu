@@ -1,0 +1,83 @@
+<div id="related_products" style="margin-top:25px"> 
+	{$smarty.const.STRING_RELATED_ITEMS} <br>
+	<table cellspacing="0" cellpadding="0" width="100%" class="print" border="0" background="#ffffcc">
+		<tr>
+			<td align="left" valign="top" colspan="$smarty.const.CONF_RELATED_GOODS_PER_PAGE">	
+				{if $product_related_number > 0}	  
+					{include file="header.tpl.html" header=$smarty.const.STRING_RELATED_ITEMS}
+				{/if}
+			</td>
+		</tr>
+
+		<tr>
+			<td align="left" valign="top">
+				{*“аблица рекомендованных товаров формируетс€ исход€ из настройки в админке*}
+				<table cellspacing="0" cellpadding="0" width="100%" id="related_goods_table" border="0">      
+				{section name=i loop=$product_related}
+					{if $smarty.section.i.index+1 ne 0}	
+						{if $smarty.section.i.index is div by $smarty.const.CONF_RELATED_GOODS_PER_PAGE}
+							<tr>
+							{assign var="helpcounter" value=0}
+						{/if}
+	
+						{assign var="helpcounter" value=$helpcounter+1}
+						<td width="{math equation="100 / x" x=$smarty.const.CONF_RELATED_GOODS_PER_PAGE format="%d"}%" align="left" class="hdbtop">		     
+					{/if}
+  
+
+					{if $product_related ne NULL}
+						{* определ€ем пмеременные  ссылка на полное описание и формат названи€ товара с редактированием или без*}
+						{*ссылка на полное описание товара*}
+						{if $smarty.const.CONF_MOD_REWRITE eq 1}
+							{assign var="tlink" value="<a href='product_`$product_related[i].productID`.html'>`$product_related[i].name`</a>"}
+						{else}
+							{assign var="tlink" value="<a href='index.php?productID=`$product_related[i].productID`'>`$product_related[i].name`</a>"}
+						{/if}
+
+						{*—сылка на редактирование*}
+						{assign var="preheader" value="<a href='`$smarty.const.ADMIN_FILE`?productID=`$product_related[i].productID`&amp;eaction=prod' title='`$smarty.const.STRING_EDITPR`' style='float: right;'>+</a>"}
+
+						{*выводим заголовоk дл€ товара в зависимости от прав пользовател€*}
+						{if $isadmin eq "yes"}
+							{assign var="postheader_rel" value=`$preheader``$tlink`}
+						{else}
+							{assign var="postheader_rel" value=$tlink}
+						{/if}
+						<!--good-->
+						<!--ѕревью товара-->
+						{*preview*}
+						<div id="preview_pic">
+							{if $smarty.const.CONF_DISPLAY_FOTO eq 1}    	
+								{if $product_related[i].filename}{*если есть фото показываем его*}          	
+									<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$product_related[i].productID}.html{else}index.php?productID={$product_related[i].productID}{/if}">
+										<img src="/data/small/{$product_related[i].filename}" alt="{$product_related[i].name}"  height="227px">
+									</a>		
+								{else}{*если нет фото показываем заглушку*}          		
+									<a href="{if $smarty.const.CONF_MOD_REWRITE eq 1}product_{$product_related[i].productID}.html{else}index.php?productID={$product_info[i].productID}{/if}" >
+										<img src="data/empty.gif" alt="no photo" height="227px">
+									</a>
+								{/if}
+							{/if}
+						
+						<!--#ѕревью товара-->
+
+							<div id="good_descr">			
+								<div id="good_title"><span class="good_title">{$postheader_rel}</span></div>
+								{*цена товара*}
+								<div id="good_price"><span class="price">{$product_related[i].Price}</span></div>
+
+							</div><!--#good-->
+						</div>
+					{/if}{*#product-related*}
+					<!-------->				
+					{if $smarty.section.i.index+1 ne $smarty.const.CONF_RELATED_GOODS_PER_PAGE}
+						</td><td>
+					{else}
+						</td></tr> 
+					{/if}			
+				{/section}      
+				</table> 			
+			</td>
+		</tr>
+	</table>
+</div>  

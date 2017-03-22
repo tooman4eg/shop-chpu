@@ -1,0 +1,92 @@
+{* Генерация карты сайта для поисковиков (XML Sitemap) *}
+
+{if $resultFile}
+  <table class="adn"><tr><td class="help" style="padding:12px 16px 5px 16px; background-color:#CFC;">
+    <b>Карта сайта успешно сгенерирована!</b>
+    <p>Созданы следующие файлы: <ul>
+      {foreach from=$resultFile key=k item=t}
+        <li><a target="_blank" href="{$k}" class="sin">{$k}</a> {$t}</li>
+      {/foreach}
+    </ul></p>
+    {if $resultMsg}
+      <p>{$resultMsg}</p>
+    {/if}
+  </td></tr></table>
+  <br />
+{/if}
+
+{if $resultError}
+<table class="adn"><tr><td class="help" style="padding:12px 16px 5px 16px; background-color:#F00;">
+    <b>Ошибка генерации карты сайта!</b>
+    <p>Ошибка: {$resultError|escape:'html'}</p>
+  </td></tr></table>
+  <br />
+{/if}
+
+<form action="admin.php?dpt=modules&sub=xml_sitemap" method="post" name="xml_sitemap" id="xml_sitemap">
+
+<span class="titlecol2">Генерация карты сайта XML Sitemap</span> &nbsp; ({if $ErrorEmpty}{$ErrorEmpty}{else}{$smarty.const.ADMIN_SITEMAPXML_MODIFICATION}<b style="color:green">{$time_sitemap_modification}</b>{/if})
+<p><table class="adn"><tr class="lineb">
+    <td align="center" width="10px">{$smarty.const.ADMIN_ON2}</td>
+    <td align="left" width="150px">Объект</td>
+    <td align="left" width="250px">Значение приоритета</td>
+    <td align="left">Частота обновления</td>
+  </tr><tr class="liney">
+    <td align="center"><input type="checkbox" id="includeCatalog" name="includeCatalog" value="1" {if $smarty.const.CONF_SITEMAP_CATALOG_ON == 1}checked{/if}/></td>
+    <td><label for="includeCatalog">Каталог товаров</label></td>
+    <td><select name="tagsCatalog">{foreach from = $tagsArr item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_CATALOG}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsCatalog" style="position:relative;top:-1px;">категории</label>&nbsp; &nbsp; &nbsp;<select name="tagsProduct">{foreach from = $tagsArr item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_PRODUCT}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsProduct" style="position:relative;top:-1px;">товары</label></td>
+    <td><select name="tagsCatalogFreq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_CATALOG_FREQ}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsCatalogFreq" style="position:relative;top:-1px;">категории</label>&nbsp; &nbsp; &nbsp;<select name="tagsProductFreq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_PRODUCT_FREQ}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsProductFreq" style="position:relative;top:-1px;">товары</label></td>
+  </tr><tr class="liney ell">
+    <td align="center"><input type="checkbox" id="includeStatpages" name="includeStatpages" value="1" {if $smarty.const.CONF_SITEMAP_PAGES_ON == 1}checked{/if}/></td>
+    <td><label for="includeStatpages">Статические страницы</label></td>
+    <td><select name="tagsPages">{foreach from = $tagsArr item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_PAGES}selected{/if}>{$t}</option>{/foreach}</select></td>
+    <td><select name="tagsPagesFreq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_PAGES_FREQ}selected{/if}>{$t}</option>{/foreach}</select></td>
+  </tr><tr class="liney">
+    <td align="center"><input type="checkbox" id="includeNews" name="includeNews" value="1" {if $smarty.const.CONF_SITEMAP_NEWS_ON == 1}checked{/if}/></td>
+    <td><label for="includeNews">Новости</label></td>
+    <td><select name="tagsNews">{foreach from = $tagsArr item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_NEWS}selected{/if}>{$t}</option>{/foreach}</select></td>
+    <td><select name="tagsNewsFreq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_NEWS_FREQ}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsNewsFreq" style="position:relative;top:-1px;">главная</label>&nbsp; &nbsp; &nbsp;<select name="tagsNews2Freq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_NEWS2_FREQ}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsNews2Freq" style="position:relative;top:-1px;">новости</label></td>
+
+{* Articles Addon *}
+  </tr><tr class="liney ell">
+    <td align="center"><input type="checkbox" id="includeArticles" name="includeArticles" value="1" {if $smarty.const.CONF_SITEMAP_ARTICLES_ON == 1}checked{/if}/></td>
+    <td><label for="includeArticles">Статьи</label></td>
+    <td><select name="tagsArticles">{foreach from = $tagsArr item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_ARTICLES}selected{/if}>{$t}</option>{/foreach}</select></td>
+    <td><select name="tagsArticlesFreq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_ARTICLES_FREQ}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsArticlesFreq" style="position:relative;top:-1px;">главная</label>&nbsp; &nbsp; &nbsp;<select name="tagsArticles2Freq">{foreach from = $tagsArrFreq item = t}<option value="{$t}" {if $t == $smarty.const.CONF_SITEMAP_ARTICLES2_FREQ}selected{/if}>{$t}</option>{/foreach}</select> - <label for="tagsArticles2Freq" style="position:relative;top:-1px;">статьи</label></td>
+  </tr>
+{* End of Articles Addon *}
+
+  <tr><td>&nbsp;</td></tr>
+  <tr class="lineb">
+    <td align="center" width="10px">{$smarty.const.ADMIN_ON2}</td>
+    <td align="left" colspan="3">Дополнительные настройки</td>
+  </tr><tr class="liney">
+    <td align="center"><input type="checkbox" id="lastmod" name="lastmod" value="1" {if $smarty.const.CONF_SITEMAP_LASTMOD == 1}checked{/if}/></td>
+    <td align="left" colspan="3"><label for="lastmod">Включить тег &lt;lastmod&gt; в XML-карту сайта</label></td>
+  </tr>
+
+  <tr><td>&nbsp;</td></tr>
+  <tr class="lineb">
+    <td align="center" width="10px">{$smarty.const.ADMIN_ON2}</td>
+    <td align="left" colspan="3">Посылка запросов в поисковые системы</td>
+  </tr><tr class="liney">
+    <td align="center"><input type="checkbox" id="pingSE" name="pingSE" value="1" {if $smarty.const.CONF_SITEMAP_PING == 1}checked{/if}/></td>
+    <td align="left" colspan="3"><label for="pingSE">Пинг Google и Bing</label></td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+ </table></p>
+
+<input type="hidden" name="fACTION" value="gen_sitemap">
+<input type="submit" name="submit" value="Генерировать" />
+
+</form>
+
+<br><br>
+<table class="adn"><tr>
+    <td class="help" style="background-color:#CFC;"><span class="titlecol2">{$smarty.const.USEFUL_FOR_YOU}</span>
+      <div class="helptext">
+        Модуль "Карта сайта" для генерации карты сайта в <a style="text-decoration:underline;" href="http://www.sitemaps.org/" target="_blank" title="Внешняя ссылка, откроется в новом окне">формате XML Sitemap</a> (версия 1.2). <br>Сгенерированная карта полностью соответствует требованиям поисковых систем Яндекс и Google и доступна по адресу: <a style="text-decoration:underline;" target=_blank href="{$smarty.const.CONF_FULL_SHOP_URL}sitemap.xml">{$smarty.const.CONF_FULL_SHOP_URL}sitemap.xml</a>
+
+      </div>
+    </td>
+</tr></table>
